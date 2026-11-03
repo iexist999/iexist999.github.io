@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>pocketSandBlocks</title>
+  <link rel="icon" href="images/icon.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="hero">
+    <img class="game-icon" src="images/icon.png" alt="pocketSandBlocks icon">
+    <h1 class="game-title"><span class="w-pocket">pocket</span><span class="w-sand">Sand</span><span class="w-blocks">Blocks</span></h1>
+
+    <nav class="tabs" role="tablist" aria-label="Site sections">
+      <button class="tab active" role="tab" data-tab="home"   aria-selected="true">home</button>
+      <button class="tab"        role="tab" data-tab="devlog" aria-selected="false">devlog</button>
+      <button class="tab"        role="tab" data-tab="about"  aria-selected="false">about</button>
+    </nav>
+
+    <div class="scribble" aria-hidden="true">
+      <img src="images/scribble.png" alt="">
+      <img src="images/scribble.png" alt="">
+    </div>
+  </header>
+
+  <main class="pages">
+    <section id="home" class="panel visible" role="tabpanel">
+      <h2>Welcome to pocketSandBlocks</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+
+      <h3>Features</h3>
+      <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+      <h3>Get the game</h3>
+      <p>Curabitur pretium tincidunt lacus. Nulla gravida orci a odio, et facilisis nisl blandit non. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.</p>
+    </section>
+
+    <section id="devlog" class="panel" role="tabpanel" hidden>
+      <article class="entry">
+        <h2>Devlog #3: Sample title about physics</h2>
+        <p class="date">March 12, 2026</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris.</p>
+        <p>Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+      </article>
+
+      <article class="entry">
+        <h2>Devlog #2: Another sample title</h2>
+        <p class="date">February 20, 2026</p>
+        <p>Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem.</p>
+        <p>Proin ut ligula vel nunc egestas porttitor. Morbi lectus risus, iaculis vel, suscipit quis, luctus non, massa. Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum.</p>
+        <p>Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra.</p>
+      </article>
+
+      <article class="entry">
+        <h2>Devlog #1: The very first post</h2>
+        <p class="date">January 28, 2026</p>
+        <p>Nam nec ante. Sed lacinia, urna non tincidunt mattis, tortor neque adipiscing diam, a cursus ipsum ante quis turpis. Nulla facilisi. Ut fringilla. Suspendisse potenti. Nunc feugiat mi a tellus consequat imperdiet.</p>
+        <p>Vestibulum sapien. Proin quam. Etiam ultrices. Suspendisse in justo eu magna luctus suscipit. Sed lectus. Integer euismod lacus luctus magna.</p>
+      </article>
+    </section>
+
+    <section id="about" class="panel" role="tabpanel" hidden>
+      <h2>About the project</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sollicitudin, nisl at pharetra tincidunt, nisi arcu faucibus massa, eget dictum neque justo vitae lectus.</p>
+
+      <h3>Contact</h3>
+      <p>Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc.</p>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

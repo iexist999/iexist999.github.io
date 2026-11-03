@@ -1,0 +1,173 @@
+/* ---------- Your custom font ----------
+   Put your font file(s) in the "fonts" folder and make sure the
+   file names below match (or change the names here). */
+@font-face {
+  font-family: "PSBFont";
+  src: url("fonts/myfont.woff2") format("woff2"),
+       url("fonts/myfont.ttf")   format("truetype"),
+       url("fonts/myfont.otf")   format("opentype");
+  font-display: swap;
+}
+
+:root {
+  --bg: #000000;
+  --text: #ffffff;
+  --accent: #8fd3ff;            /* light blue for the selected tab */
+  --fade-ms: 300ms;             /* keep in sync with FADE_MS in script.js */
+  --resize-ms: 400ms;           /* keep in sync with RESIZE_MS in script.js */
+  --title-font: "PSBFont", system-ui, sans-serif;
+  --ui-font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+}
+
+body {
+  font-family: var(--ui-font);
+  min-height: 100vh;
+}
+
+/* ---------- Top section ---------- */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 40px 16px 0;
+}
+
+.game-icon {
+  display: block;
+  width: min(80vw, 460px);      /* very big, but never wider than the screen */
+  aspect-ratio: 1 / 1;          /* always square */
+  object-fit: cover;
+}
+
+.game-title {
+  margin: 28px 0 0;
+  font-family: var(--title-font);
+  font-weight: normal;
+  font-size: clamp(2.6rem, 10vw, 6rem);
+  line-height: 1.05;
+  overflow-wrap: anywhere;
+  .w-pocket { color: #fff1a8; }  /* pastel yellow */
+	.w-sand   { color: #a8d8ff; }  /* pastel blue */
+	.w-blocks { color: #ff9aa2; }  /* pastel red */
+}
+
+/* ---------- Tab buttons ---------- */
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: clamp(20px, 5vw, 44px);
+  margin-top: 28px;
+}
+
+.tab {
+  background: none;
+  border: none;
+  padding: 6px 4px;
+  font: inherit;
+  font-size: clamp(1.1rem, 3.5vw, 1.5rem);
+  color: var(--text);
+  cursor: pointer;
+  text-decoration: underline transparent;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.tab:hover { color: var(--accent); }
+
+.tab.active {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
+
+.tab:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+/* ---------- Scribble divider ----------
+   Two copies of the same image sit side by side and overlap slightly,
+   so the end of the first copy is covered by the start of the second. */
+.scribble {
+  --piece-width: min(40vw, 700px);   /* width of EACH copy (total is about double) */
+  --overlap: 0.5cm;                  /* how far the two copies overlap */
+
+  display: flex;
+  justify-content: center;
+  margin-top: 14px;
+}
+
+.scribble img {
+  display: block;
+  flex: none;
+  width: var(--piece-width);
+  height: auto;                      /* keeps your drawing's own proportions */
+}
+
+.scribble img:last-child {
+  margin-left: calc(var(--overlap) * -1);
+}
+
+/* ---------- Pages + fade ---------- */
+.pages {
+  display: flow-root;           /* keeps child margins inside, so height is measured correctly */
+  width: min(100% - 32px, 780px);
+  margin: 32px auto 80px;
+  transition: height var(--resize-ms) ease;   /* smooth growing / shrinking */
+}
+
+.pages.resizing { overflow: hidden; }
+
+.panel {
+  display: flow-root;
+  opacity: 0;
+  transition: opacity var(--fade-ms) ease;
+}
+
+.panel.visible { opacity: 1; }
+
+.panel[hidden] { display: none; }
+
+/* ---------- Page content ---------- */
+.panel h2 {
+  margin: 0 0 6px;
+  font-size: clamp(1.5rem, 4.5vw, 2rem);
+  font-weight: 600;
+}
+
+.panel h3 {
+  margin: 32px 0 6px;
+  font-size: clamp(1.15rem, 3.5vw, 1.4rem);
+  font-weight: 600;
+}
+
+.panel p {
+  margin: 0 0 16px;
+  line-height: 1.7;
+  color: #cfcfcf;
+}
+
+.panel .date {
+  margin-bottom: 14px;
+  font-size: 0.9rem;
+  color: #8a8a8a;
+}
+
+.entry + .entry {
+  margin-top: 44px;
+  padding-top: 32px;
+  border-top: 1px solid #262626;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel, .tab, .pages { transition: none; }
+}
