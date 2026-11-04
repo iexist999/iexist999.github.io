@@ -1,6 +1,3 @@
-/* ---------- Your custom font ----------
-   Put your font file(s) in the "fonts" folder and make sure the
-   file names below match (or change the names here). */
 @font-face {
   font-family: "PSBFont";
   src: url("fonts/myfont.woff2") format("woff2"),
@@ -12,11 +9,11 @@
 :root {
   --bg: #000000;
   --text: #ffffff;
-  --accent: #8fd3ff;            /* light blue for the selected tab */
+  --accent: #8fd3ff;            /* light blue */
   --fade-ms: 300ms;             /* keep in sync with FADE_MS in script.js */
   --resize-ms: 400ms;           /* keep in sync with RESIZE_MS in script.js */
   --title-font: "PSBFont", system-ui, sans-serif;
-  --ui-font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --ui-font: "PSBFont", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
 * { box-sizing: border-box; }
@@ -25,6 +22,14 @@ html, body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
+}
+
+html { scrollbar-gutter: stable; }   /* stops the layout from jumping sideways when the scrollbar appears */
+
+html.locked,
+html.locked body {
+  overflow: hidden;
+  touch-action: none;   /* blocks touch scrolling on phones */
 }
 
 body {
@@ -38,13 +43,14 @@ body {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 40px 16px 0;
+  padding: 12px 16px 0;
 }
 
 .game-icon {
   display: block;
-  width: min(80vw, 460px);      /* very big, but never wider than the screen */
-  aspect-ratio: 1 / 1;          /* always square */
+  width: min(80vw, 460px, 36vh);  /*never taller than 36% of the window */
+  width: min(80vw, 460px, 36dvh);
+  aspect-ratio: 1 / 1;
   object-fit: cover;
 }
 
@@ -55,9 +61,9 @@ body {
   font-size: clamp(2.6rem, 10vw, 6rem);
   line-height: 1.05;
   overflow-wrap: anywhere;
-  .w-pocket { color: #fff1a8; }  /* pastel yellow */
-	.w-sand   { color: #a8d8ff; }  /* pastel blue */
-	.w-blocks { color: #ff9aa2; }  /* pastel red */
+  .w-pocket { color: #fff1a8; }  /* yellow */
+	.w-sand   { color: #a8d8ff; }  /* blue */
+	.w-blocks { color: #ff9aa2; }  /* red */
 }
 
 /* ---------- Tab buttons ---------- */
@@ -65,7 +71,7 @@ body {
   display: flex;
   justify-content: center;
   gap: clamp(20px, 5vw, 44px);
-  margin-top: 28px;
+  margin-top: 8px;   /* was 28px */
 }
 
 .tab {
@@ -98,7 +104,7 @@ body {
    Two copies of the same image sit side by side and overlap slightly,
    so the end of the first copy is covered by the start of the second. */
 .scribble {
-  --piece-width: min(40vw, 700px);   /* width of EACH copy (total is about double) */
+  --piece-width: min(40vw, 700px);
   --overlap: 0.5cm;                  /* how far the two copies overlap */
 
   display: flex;
@@ -110,7 +116,7 @@ body {
   display: block;
   flex: none;
   width: var(--piece-width);
-  height: auto;                      /* keeps your drawing's own proportions */
+  height: auto;
 }
 
 .scribble img:last-child {
@@ -119,10 +125,10 @@ body {
 
 /* ---------- Pages + fade ---------- */
 .pages {
-  display: flow-root;           /* keeps child margins inside, so height is measured correctly */
+  display: flow-root;
   width: min(100% - 32px, 780px);
   margin: 32px auto 80px;
-  transition: height var(--resize-ms) ease;   /* smooth growing / shrinking */
+  transition: height var(--resize-ms) ease;
 }
 
 .pages.resizing { overflow: hidden; }
@@ -171,3 +177,40 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .panel, .tab, .pages { transition: none; }
 }
+
+/* ---------- Handwritten titles ---------- */
+.hand-title svg,
+.hand-title img {
+  display: block;
+  width: var(--title-width, min(100%, 560px));
+  height: auto;
+}
+
+.game-title.hand-title {
+  --title-width: min(92vw, 760px, 70vh);
+  --title-width: min(92vw, 760px, 70dvh);
+}
+
+.panel .hand-title { --title-scale: 0.5; }
+
+.panel .hand-title svg {
+  width: calc(var(--svg-w) * var(--title-scale) * 1px);
+  max-width: 100%;   /* never wider than the page on small screens */
+}
+
+.panel .hand-title { --title-scale: 1; }   /* default for no override */
+
+#home   .hand-title { --title-scale: 0.6; }
+#devlog .hand-title { --title-scale: 0.6; }
+#about  .hand-title { --title-scale: 0.55; }
+
+/*home titles*/
+
+#home .hand-title {
+  --title-width: min(90%, 420px);
+  margin: 0 0 12px;
+}
+
+/* ---------- Letter-by-letter text ---------- */
+.panel .char { opacity: 0; }          /* hidden until its fade starts */
+.panel .word { white-space: nowrap; }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="locked">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,13 +11,13 @@
 
   <header class="hero">
     <img class="game-icon" src="images/icon.png" alt="pocketSandBlocks icon">
-    <h1 class="game-title"><span class="w-pocket">pocket</span><span class="w-sand">Sand</span><span class="w-blocks">Blocks</span></h1>
+    <h1 class="game-title hand-title" data-title="pocketSandBlocks" data-svg="pocketsandblocks.svg">pocketSandBlocks</h1>
 
     <nav class="tabs" role="tablist" aria-label="Site sections">
-      <button class="tab active" role="tab" data-tab="home"   aria-selected="true">home</button>
-      <button class="tab"        role="tab" data-tab="devlog" aria-selected="false">devlog</button>
-      <button class="tab"        role="tab" data-tab="about"  aria-selected="false">about</button>
-    </nav>
+		<button class="tab" role="tab" data-tab="home"   aria-selected="false">home</button>
+		<button class="tab" role="tab" data-tab="devlog" aria-selected="false">devlog</button>
+		<button class="tab" role="tab" data-tab="about"  aria-selected="false">about</button>
+	</nav>
 
     <div class="scribble" aria-hidden="true">
       <img src="images/scribble.png" alt="">
@@ -26,21 +26,23 @@
   </header>
 
   <main class="pages">
-    <section id="home" class="panel visible" role="tabpanel">
-      <h2>Welcome to pocketSandBlocks</h2>
-      <p>this website is under construction.</p>
-    </section>
+	  <section id="home" class="panel" role="tabpanel" hidden>
+	  <h1 class="hand-title" data-title="welcome" data-svg="welcome.svg">Welcome!</h1>
+	  <p>this website is under construction.</p>
+	</section>
 
-    <section id="devlog" class="panel" role="tabpanel" hidden>
-      <article class="entry">
-        <p>this website is under construction.</p>
-      </article>
-    </section>
+	  <section id="devlog" class="panel" role="tabpanel" hidden>
+		<article class="entry">
+		<h1 class="hand-title" data-title="devlog" data-svg="devlog.svg">Devlog</h1>
+		  <p>this website is under construction.</p>
+		</article>
+	  </section>
 
-    <section id="about" class="panel" role="tabpanel" hidden>
-      <p>this website is under construction.</p>
-    </section>
-  </main>
+	  <section id="about" class="panel" role="tabpanel" hidden>
+	  <h1 class="hand-title" data-title="about" data-svg="about.svg">About</h1>
+		<p>this website is under construction.</p>
+	  </section>
+	</main>
 
   <script src="script.js"></script>
 </body>
