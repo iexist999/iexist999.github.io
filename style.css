@@ -325,6 +325,36 @@ body {
 .info-box:nth-child(1) h3 { color: #8fd3ff; }  /* blue */
 .info-box:nth-child(2) h3 { color: #ffbf80; }  /* orange */
 
+/* wavy title while the box is hovered (letters are .char spans made by script.js) */
+/* --amp is how high the wave goes. registering it lets it fade between values smoothly */
+@property --amp {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
+.info-box h3 .char {
+  display: inline-block;                        /* needed so letters can move up and down */
+  --amp: 0px;                                   /* resting: the wave runs, but with no height */
+  transition: --amp 0.5s ease;                  /* how long it takes to ease in and out */
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .info-box h3 .char {
+    animation: wave 1.3s ease-in-out infinite;
+    animation-delay: calc(var(--i) * -0.14s);   /* each letter is a bit behind the previous one */
+  }
+}
+
+@media (hover: hover) {
+  .info-box:hover h3 .char { --amp: 5px; }      /* wave height while hovered */
+}
+
+@keyframes wave {
+  0%, 100% { transform: translateY(var(--amp)); }
+  50%      { transform: translateY(calc(var(--amp) * -1)); }
+}
+
 .info-box ul {
   margin: 0;
   padding-left: 22px;

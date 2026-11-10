@@ -187,13 +187,18 @@ function splitText(root) {
 panels.forEach(panel => {
   panel._chars = [];
   panel.querySelectorAll(":is(h1:not(.hand-title), h2, h3, p, li)").forEach(el => {
-    panel._chars.push(...splitText(el));
+    const chars = splitText(el);
+    chars.forEach((c, i) => c.style.setProperty("--i", i));   // letter number, used by the wave delay
+    panel._chars.push(...chars);
   });
 });
 
 function playText(panel) {
   const chars = panel._chars;
-  chars.forEach(c => c.getAnimations().forEach(a => a.cancel()));
+  // cancel only the fade-ins, not CSS animations like the title wave
+  chars.forEach(c => c.getAnimations()
+    .filter(a => !(a instanceof CSSAnimation))
+    .forEach(a => a.cancel()));
 
   if (reduceMotion.matches) {        // no motion
     chars.forEach(c => { c.style.opacity = 1; });
