@@ -187,18 +187,13 @@ function splitText(root) {
 panels.forEach(panel => {
   panel._chars = [];
   panel.querySelectorAll(":is(h1:not(.hand-title), h2, h3, p, li)").forEach(el => {
-    const chars = splitText(el);
-    chars.forEach((c, i) => c.style.setProperty("--i", i));   // letter number, used by the wave delay
-    panel._chars.push(...chars);
+    panel._chars.push(...splitText(el));
   });
 });
 
 function playText(panel) {
   const chars = panel._chars;
-  // cancel only the fade-ins, not CSS animations like the title wave
-  chars.forEach(c => c.getAnimations()
-    .filter(a => !(a instanceof CSSAnimation))
-    .forEach(a => a.cancel()));
+  chars.forEach(c => c.getAnimations().forEach(a => a.cancel()));
 
   if (reduceMotion.matches) {        // no motion
     chars.forEach(c => { c.style.opacity = 1; });
@@ -320,4 +315,56 @@ if (modeList) {
   modeList.querySelectorAll("li").forEach(li => ro.observe(li));
   if (document.fonts) document.fonts.ready.then(layoutModeBoxes);
   layoutModeBoxes();
+}
+
+// ---------- Wavy box titles (while the box is hovered) ----------
+const WAVE_HEIGHT = 5;         // how far letters move up and down, in px
+const WAVE_PERIOD_MS = 1300;   // time for one full wave
+const WAVE_LAG_MS = 140;       // each letter is this far behind the previous one
+const WAVE_EASE_MS = 500;      // time to ease into / out of the wave
+
+if (window.matchMedia("(hover: hover)").matches && !reduceMotion.matches) {
+  document.querySelectorAll(".info-box").forEach(box => {
+    const letters = [...box.querySelectorAll("h3 .char")];
+    let strength = 0;            // 0 = flat, 1 = full wave
+    let target = 0;              // where strength is heading
+    let last = 0;
+    let frame = null;
+
+    function tick(now) {
+      const dt = now - last;
+      last = now;
+
+      // move strength toward the target at a steady speed
+      const stepSize = dt / WAVE_EASE_MS;
+      strength = target > strength
+        ? Math.min(strength + stepSize, target)
+        : Math.max(strength - stepSize, target);
+
+      const eased = strength * strength * (3 - 2 * strength);   // smooth start and end
+
+      letters.forEach((c, i) => {
+        const phase = ((now + i * WAVE_LAG_MS) / WAVE_PERIOD_MS) * Math.PI * 2;
+        c.style.transform = `translateY(${Math.sin(phase) * eased * WAVE_HEIGHT}px)`;
+      });
+
+      if (strength === 0 && target === 0) {   // fully back to rest: stop the loop
+        letters.forEach(c => { c.style.transform = ""; });
+        frame = null;
+        return;
+      }
+      frame = requestAnimationFrame(tick);
+    }
+
+    function setTarget(value) {
+      target = value;
+      if (frame === null) {
+        last = performance.now();
+        frame = requestAnimationFrame(tick);
+      }
+    }
+
+    box.addEventListener("mouseenter", () => setTarget(1));
+    box.addEventListener("mouseleave", () => setTarget(0));
+  });
 }
