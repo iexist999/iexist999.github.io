@@ -1,3 +1,6 @@
+/* ==========================================================
+   Fonts
+   ========================================================== */
 @font-face {
   font-family: "PSBFont";
   src: url("fonts/myfont.woff2") format("woff2"),
@@ -6,14 +9,24 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "PSBHandwrite";
+  src: url("fonts/pocketscribbleweb.otf") format("opentype"),
+       url("fonts/pocketscribbleweb.ttf") format("truetype");
+  font-display: swap;
+}
+
+/* ==========================================================
+   Base
+   ========================================================== */
 :root {
   --bg: #000000;
   --text: #ffffff;
   --accent: #8fd3ff;            /* light blue */
   --fade-ms: 300ms;             /* keep in sync with FADE_MS in script.js */
-  --resize-ms: 400ms;           /* keep in sync with RESIZE_MS in script.js */
   --title-font: "PSBFont", system-ui, sans-serif;
   --ui-font: "PSBFont", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --text-font: "PSBHandwrite", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
 * { box-sizing: border-box; }
@@ -24,12 +37,12 @@ html, body {
   color: var(--text);
 }
 
-html { scrollbar-gutter: stable; }   /* stops the layout from jumping sideways when the scrollbar appears */
+html { scrollbar-gutter: stable; }   /* stops the layout jumping sideways when the scrollbar appears */
 
 html.locked,
 html.locked body {
   overflow: hidden;
-  touch-action: none;   /* blocks touch scrolling on phones */
+  touch-action: none;                /* blocks touch scrolling on phones */
 }
 
 body {
@@ -37,7 +50,9 @@ body {
   min-height: 100vh;
 }
 
-/* ---------- Top section ---------- */
+/* ==========================================================
+   Top section
+   ========================================================== */
 .hero {
   display: flex;
   flex-direction: column;
@@ -48,7 +63,7 @@ body {
 
 .game-icon {
   display: block;
-  width: min(80vw, 460px, 36vh);  /*never taller than 36% of the window */
+  width: min(80vw, 460px, 36vh);     /* never taller than 36% of the window */
   width: min(80vw, 460px, 36dvh);
   aspect-ratio: 1 / 1;
   object-fit: cover;
@@ -61,9 +76,6 @@ body {
   font-size: clamp(2.6rem, 10vw, 6rem);
   line-height: 1.05;
   overflow-wrap: anywhere;
-  .w-pocket { color: #fff1a8; }  /* yellow */
-	.w-sand   { color: #a8d8ff; }  /* blue */
-	.w-blocks { color: #ff9aa2; }  /* red */
 }
 
 /* ---------- Tab buttons ---------- */
@@ -71,7 +83,7 @@ body {
   display: flex;
   justify-content: center;
   gap: clamp(20px, 5vw, 44px);
-  margin-top: 8px;   /* was 28px */
+  margin-top: 8px;
 }
 
 .tab {
@@ -101,11 +113,11 @@ body {
 }
 
 /* ---------- Scribble divider ----------
-   Two copies of the same image sit side by side and overlap slightly,
-   so the end of the first copy is covered by the start of the second. */
+   Two copies of the same image overlap slightly so the end of
+   the first copy is covered by the start of the second. */
 .scribble {
   --piece-width: min(40vw, 700px);
-  --overlap: 0.5cm;                  /* how far the two copies overlap */
+  --overlap: 0.5cm;
 
   display: flex;
   justify-content: center;
@@ -123,15 +135,14 @@ body {
   margin-left: calc(var(--overlap) * -1);
 }
 
-/* ---------- Pages + fade ---------- */
+/* ==========================================================
+   Pages + fade
+   ========================================================== */
 .pages {
   display: flow-root;
   width: min(100% - 32px, 780px);
   margin: 32px auto 80px;
-  transition: height var(--resize-ms) ease;
 }
-
-.pages.resizing { overflow: hidden; }
 
 .panel {
   display: flow-root;
@@ -140,8 +151,11 @@ body {
 }
 
 .panel.visible { opacity: 1; }
-
 .panel[hidden] { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .panel, .tab { transition: none; }
+}
 
 /* ---------- Page content ---------- */
 .panel h2 {
@@ -158,6 +172,7 @@ body {
 
 .panel p {
   margin: 0 0 16px;
+  font-family: var(--text-font);
   line-height: 1.7;
   color: #cfcfcf;
 }
@@ -174,11 +189,13 @@ body {
   border-top: 1px solid #262626;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .panel, .tab, .pages { transition: none; }
-}
+/* ---------- Letter-by-letter text ---------- */
+.panel .char { opacity: 0; }          /* hidden until its fade starts */
+.panel .word { white-space: nowrap; }
 
-/* ---------- Handwritten titles ---------- */
+/* ==========================================================
+   Handwritten titles
+   ========================================================== */
 .hand-title svg,
 .hand-title img {
   display: block;
@@ -191,26 +208,199 @@ body {
   --title-width: min(92vw, 760px, 70dvh);
 }
 
-.panel .hand-title { --title-scale: 0.5; }
-
-.panel .hand-title svg {
-  width: calc(var(--svg-w) * var(--title-scale) * 1px);
-  max-width: 100%;   /* never wider than the page on small screens */
-}
-
-.panel .hand-title { --title-scale: 1; }   /* default for no override */
-
+/* titles inside tabs are sized from the SVG's own canvas width */
+.panel .hand-title { --title-scale: 1; }
 #home   .hand-title { --title-scale: 0.6; }
 #devlog .hand-title { --title-scale: 0.6; }
 #about  .hand-title { --title-scale: 0.55; }
 
-/*home titles*/
+.panel .hand-title svg {
+  width: calc(var(--svg-w) * var(--title-scale) * 1px);
+  max-width: 100%;                    /* never wider than the page on small screens */
+}
 
 #home .hand-title {
-  --title-width: min(90%, 420px);
+  --title-width: min(90%, 420px);     /* only used by the <img> fallback */
   margin: 0 0 12px;
 }
 
-/* ---------- Letter-by-letter text ---------- */
-.panel .char { opacity: 0; }          /* hidden until its fade starts */
-.panel .word { white-space: nowrap; }
+/* ==========================================================
+   Gamemode list
+   ========================================================== */
+.mode-list {
+  list-style: none;
+  margin: 28px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;                          /* only used on phones (desktop is staggered) */
+}
+
+/* anything that gets a scribble background (box layers are added by script.js) */
+.mode-list li,
+.info-box {
+  --b: 28px;                          /* thickness of the border/corner on screen */
+  --box-color: #1e1e1e;               /* dye color of every box */
+  position: relative;
+  isolation: isolate;                 /* keeps the box behind the text, but inside the element */
+}
+
+.mode-list li {
+  width: var(--w, 50%);
+  padding: calc(var(--b) * 0.45 + var(--pad-y, 6px)) calc(var(--b) * 0.5 + 8px);
+  font-size: clamp(1.15rem, 3.5vw, 1.4rem);
+  line-height: 1.4;
+}
+
+.mode-list strong { font-weight: 600; }
+
+.mode-desc {
+  display: block;
+  margin-top: 8px;
+  margin-left: 10px;
+  font-family: var(--text-font);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #cfcfcf;
+}
+
+/* Per gamemode, top to bottom:
+   --w     box width
+   --pad-y extra vertical padding
+   --shift sideways drift (negative = sticks out past the text edge)
+   strong  name color */
+.mode-list li:nth-child(1) { --w: 48%; --pad-y: 6px;  --shift: -16px; }
+.mode-list li:nth-child(2) { --w: 53%; --pad-y: 10px; --shift: -8px;  }
+.mode-list li:nth-child(3) { --w: 50%; --pad-y: 4px;  --shift: 6px;   }
+.mode-list li:nth-child(4) { --w: 46%; --pad-y: 12px; --shift: -14px; }
+.mode-list li:nth-child(5) { --w: 52%; --pad-y: 8px;  --shift: -4px;  }
+
+.mode-list li:nth-child(1) strong { color: #fff1a8; }  /* yellow */
+.mode-list li:nth-child(2) strong { color: #5eab3e; }  /* green */
+.mode-list li:nth-child(3) strong { color: #8fd3ff; }  /* blue */
+.mode-list li:nth-child(4) strong { color: #ff9aa2; }  /* red */
+.mode-list li:nth-child(5) strong { color: #ffbf80; }  /* orange */
+
+/* odd = left, even = right */
+.mode-list li:nth-child(odd)  { align-self: flex-start; }
+.mode-list li:nth-child(even) { align-self: flex-end; }
+
+/* ---------- Staggered layout (desktop, positions set by script.js) ---------- */
+.mode-list.staggered { position: relative; }
+
+.mode-list.staggered li {
+  position: absolute;
+  margin: 0;
+}
+.mode-list.staggered li:nth-child(odd)  { left:  var(--shift, 0px); }
+.mode-list.staggered li:nth-child(even) { right: var(--shift, 0px); }
+
+/* on phones, half the width is too cramped */
+@media (max-width: 600px) {
+  .mode-list li { width: 88%; }
+}
+
+/* ==========================================================
+   Devlog boxes (roadmap + upcoming)
+   ========================================================== */
+.info-boxes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;     /* two boxes side by side, same width */
+  gap: 24px;
+  margin-top: 28px;
+}
+
+.info-box {
+  --b: 34px;                          /* a bit thicker scribble than the gamemode boxes */
+  aspect-ratio: 1 / 1.15;             /* square, a bit taller. grows if the list gets longer */
+  align-self: stretch;                /* both boxes match the taller one */
+  padding: calc(var(--b) * 0.9);
+}
+
+.info-box h3 {
+  margin: 0 0 10px;
+  font-size: clamp(1.3rem, 3.5vw, 1.7rem);
+}
+
+.info-box:nth-child(1) h3 { color: #8fd3ff; }  /* blue */
+.info-box:nth-child(2) h3 { color: #ffbf80; }  /* orange */
+
+.info-box ul {
+  margin: 0;
+  padding-left: 22px;
+  font-family: var(--text-font);
+  line-height: 1.7;
+  color: #cfcfcf;
+}
+
+.info-box li + li { margin-top: 4px; }
+
+/* on phones the boxes stack */
+@media (max-width: 600px) {
+  .info-boxes { grid-template-columns: 1fr; }
+}
+
+/* ==========================================================
+   Scribble boxes (built by script.js inside each gamemode li and info-box)
+   ========================================================== */
+.box {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  container-type: size;               /* lets the side edges know the box height (cqh) */
+}
+
+.box i {
+  position: absolute;
+  background-color: var(--box-color);
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+}
+
+/* fill (overlaps the edges slightly so no gaps show) */
+.box .fill {
+  inset: calc(var(--b) * 0.5);
+  mask-image: url("images/webbox_fill.png");
+  -webkit-mask-image: url("images/webbox_fill.png");
+  mask-repeat: repeat;
+  -webkit-mask-repeat: repeat;
+}
+
+/* corners: one image, flipped */
+.box .c {
+  width: var(--b);
+  height: var(--b);
+  mask-image: url("images/webbox_corner.png");
+  -webkit-mask-image: url("images/webbox_corner.png");
+  mask-size: 100% 100%;
+  -webkit-mask-size: 100% 100%;
+}
+.box .tl { top: 0;    left: 0; }
+.box .tr { top: 0;    right: 0; transform: scaleX(-1); }
+.box .bl { bottom: 0; left: 0;  transform: scaleY(-1); }
+.box .br { bottom: 0; right: 0; transform: scale(-1, -1); }
+
+/* edges: one image, tiled at its natural size, flipped/rotated */
+.box .e {
+  height: var(--b);
+  mask-image: url("images/webbox_border.png");
+  -webkit-mask-image: url("images/webbox_border.png");
+  mask-size: auto 100%;               /* height = --b, width keeps the aspect ratio */
+  -webkit-mask-size: auto 100%;
+  mask-repeat: repeat no-repeat;      /* tile along the length, never rescale */
+  -webkit-mask-repeat: repeat no-repeat;
+  mask-position: center;              /* any cut-off tile is split between both ends */
+  -webkit-mask-position: center;
+}
+.box .t { top: 0;    left: var(--b); right: var(--b); }
+.box .b { bottom: 0; left: var(--b); right: var(--b); transform: scaleY(-1); }
+
+/* left/right edges: the horizontal strip, rotated into place */
+.box .l,
+.box .r {
+  width: calc(100cqh - 2 * var(--b)); /* strip length = box height minus corners */
+  transform-origin: 0 0;
+}
+.box .l { top: 0; left: 0;    transform: translateY(calc(100cqh - var(--b))) rotate(-90deg); }
+.box .r { top: 0; left: 100%; transform: translateY(var(--b)) rotate(90deg); }

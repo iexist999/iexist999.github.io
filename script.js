@@ -1,27 +1,31 @@
-const FADE_MS = 300;      // must match --fade-ms in style.css
-const SCROLL_MS = 1400;   // scroll duration
+// ---------- Settings ----------
+const FADE_MS = 300;             // must match --fade-ms in style.css
+const SCROLL_MS = 1400;          // scroll duration
 
-// handwritten title settings
+// handwritten titles
 const TITLE_DIR = "svg/";        // folder with your title SVGs
-const WRITE_SPEED = 600;        // SVG units drawn per second
+const WRITE_SPEED = 600;         // SVG units drawn per second
 const MIN_STROKE_MS = 150;       // shortest time any single stroke takes
 const STROKE_OVERLAP = 0.6;      // 0.6 = next stroke starts at 60% of the previous one
 const DEFAULT_STROKE_WIDTH = 20; // used only if a path has no stroke width
 const WIPE_MS = 2200;            // fallback reveal if the SVG loads as an <img>
 
 // letter-by-letter text fade
-const TEXT_LETTER_MS = 25;   // delay between letters
-const TEXT_MAX_MS = 1500;    // a whole tab's text never takes longer than this to appear
-const TEXT_FADE_MS = 250;    // how long each letter takes to fade in
-const TEXT_START_MS = 0;     // wait before the first letter
+const TEXT_LETTER_MS = 25;       // delay between letters
+const TEXT_MAX_MS = 1500;        // a whole tab's text never takes longer than this to appear
+const TEXT_FADE_MS = 250;        // how long each letter takes to fade in
+const TEXT_START_MS = 0;         // wait before the first letter
+
+// gamemode boxes
+const STAGGER_GAP = 22;          // min vertical space between boxes on the same side
 
 const tabs   = document.querySelectorAll(".tab");
 const panels = document.querySelectorAll(".panel");
 const tabBar = document.querySelector(".tabs");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-let current = null;   // null = no tab open yet
-let token = 0;        // lets rapid clicks cancel older switches
+let current = null;              // null = no tab open yet
+let token = 0;                   // lets rapid clicks cancel older switches
 let scrollFrame = null;
 
 // ---------- Slow ease-out scroll ----------
@@ -76,9 +80,10 @@ async function loadTitle(el) {
       svg.removeAttribute("height");
     }
     svg.setAttribute("aria-hidden", "true");
-	const vb = svg.viewBox && svg.viewBox.baseVal;
+
+    const vb = svg.viewBox && svg.viewBox.baseVal;
     if (vb && vb.width) el.style.setProperty("--svg-w", vb.width);   // canvas width in SVG units
-	
+
     el.setAttribute("aria-label", el.dataset.title);
     el.replaceChildren(svg);
     return;
@@ -100,12 +105,6 @@ function playTitle(el) {
   el.getAnimations({ subtree: true }).forEach(a => a.cancel());
 
   const svg = el.querySelector("svg");
-  const strokes = svg
-    ? [...svg.querySelectorAll("path, line, polyline")]
-        .filter(p => !p.closest("defs, clipPath, mask, symbol"))
-    : [];
-
-  console.log(`[title] "${el.dataset.title}" reduceMotion=${reduceMotion.matches} svg=${!!svg} paths=${strokes.length}`);
 
   if (!svg) {   // loaded as <img>: simple left-to-right wipe
     const img = el.querySelector("img");
@@ -115,6 +114,9 @@ function playTitle(el) {
     );
     return;
   }
+
+  const strokes = [...svg.querySelectorAll("path, line, polyline")]
+    .filter(p => !p.closest("defs, clipPath, mask, symbol"));
 
   let start = 0;
   strokes.forEach(p => {
@@ -193,11 +195,11 @@ function playText(panel) {
   const chars = panel._chars;
   chars.forEach(c => c.getAnimations().forEach(a => a.cancel()));
 
-  if (reduceMotion.matches) {                       // no motion
+  if (reduceMotion.matches) {        // no motion
     chars.forEach(c => { c.style.opacity = 1; });
     return;
   }
-  
+
   const step = Math.min(TEXT_LETTER_MS, TEXT_MAX_MS / Math.max(chars.length, 1));
 
   chars.forEach((c, i) => {
@@ -233,15 +235,15 @@ function switchTo(name) {
     panels.forEach(panel => { panel.hidden = panel.id !== name; });
 
     const incoming = document.getElementById(name);
-    void incoming.offsetWidth;
+    void incoming.offsetWidth;       // force reflow so the fade-in transition runs
     incoming.classList.add("visible");
 
     // write the titles inside this panel
     incoming.querySelectorAll(".hand-title").forEach(el => {
       el._ready.then(() => { if (myToken === token) playTitle(el); });
     });
-	
-	playText(incoming);
+
+    playText(incoming);
 
     if (wasAtTop) scrollToTabs();
   }, isFirstOpen ? 0 : FADE_MS);
@@ -251,8 +253,9 @@ tabs.forEach(tab => {
   tab.addEventListener("click", () => switchTo(tab.dataset.tab));
 });
 
+// ---------- Lock the page until the first tab is opened (if the tabs fit on screen) ----------
 function unlockIfTabsOffscreen() {
-  if (current !== null) return;   // a tab is already open, nothing to do
+  if (current !== null) return;      // a tab is already open, nothing to do
   const tabsBottom = tabBar.getBoundingClientRect().bottom + window.scrollY;
   const fits = tabsBottom <= window.innerHeight;
   document.documentElement.classList.toggle("locked", fits);
@@ -261,3 +264,55 @@ function unlockIfTabsOffscreen() {
 window.addEventListener("resize", unlockIfTabsOffscreen);
 new ResizeObserver(unlockIfTabsOffscreen).observe(document.querySelector(".hero"));
 unlockIfTabsOffscreen();
+
+// ---------- Scribble boxes ----------
+// background: 9 layers (fill, 4 corners, 4 edges) inside every gamemode and devlog box
+function addScribbleBox(el) {
+  const box = document.createElement("div");
+  box.className = "box";
+  box.setAttribute("aria-hidden", "true");
+  ["fill", "c tl", "c tr", "c bl", "c br", "e t", "e b", "e l", "e r"].forEach(cls => {
+    const piece = document.createElement("i");
+    piece.className = cls;
+    box.append(piece);
+  });
+  el.prepend(box);
+}
+
+document.querySelectorAll(".mode-list li, .info-box").forEach(addScribbleBox);
+
+// ---------- Gamemode layout ----------
+const modeList = document.querySelector(".mode-list");
+
+// stagger: left, right, left... each box starts at the vertical middle of the previous one
+function layoutModeBoxes() {
+  const items = [...modeList.children];
+  const stagger = window.matchMedia("(min-width: 601px)").matches;
+
+  modeList.classList.toggle("staggered", stagger);
+  items.forEach(li => { li.style.top = ""; });
+  modeList.style.height = "";
+  if (!stagger) return;              // phones: normal stacked list
+
+  const tops = [], heights = [], bottoms = [];
+  items.forEach((li, i) => {
+    const h = li.offsetHeight;
+    let top = 0;
+    if (i > 0) top = tops[i - 1] + heights[i - 1] / 2;                // middle of the previous box
+    if (i > 1) top = Math.max(top, bottoms[i - 2] + STAGGER_GAP);     // never overlap the box on the same side
+    tops.push(top);
+    heights.push(h);
+    bottoms.push(top + h);
+    li.style.top = top + "px";
+  });
+  modeList.style.height = Math.max(...bottoms) + "px";
+}
+
+if (modeList) {
+  // re-runs when the panel becomes visible, the window resizes, or text reflows
+  const ro = new ResizeObserver(layoutModeBoxes);
+  ro.observe(modeList);
+  modeList.querySelectorAll("li").forEach(li => ro.observe(li));
+  if (document.fonts) document.fonts.ready.then(layoutModeBoxes);
+  layoutModeBoxes();
+}
