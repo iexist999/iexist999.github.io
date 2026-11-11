@@ -1,3 +1,6 @@
+/* good chunks of this code were built with the help of an ai.
+	actually, most of it was. i suck at webdev you cant blame me >.<*/
+
 // ---------- Settings ----------
 const FADE_MS = 300;             // must match --fade-ms in style.css
 const SCROLL_MS = 1400;          // scroll duration
