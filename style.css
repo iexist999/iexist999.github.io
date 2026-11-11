@@ -312,7 +312,7 @@ body {
 
 .info-box {
   --b: 34px;                          /* a bit thicker scribble than the gamemode boxes */
-  aspect-ratio: 1 / 1.15;             /* square, a bit taller. grows if the list gets longer */
+  aspect-ratio: 1 / 0.8;             /* (i was a) square :D */
   align-self: stretch;                /* both boxes match the taller one */
   padding: calc(var(--b) * 0.9);
 }
@@ -359,11 +359,28 @@ body {
   margin: 0;
   padding-left: 22px;
   font-family: var(--text-font);
-  line-height: 1.7;
+  line-height: 1.2;
   color: #cfcfcf;
 }
 
 .info-box li + li { margin-top: 4px; }
+
+/* slight disposition for the bullet points */
+.info-box li { position: relative; }
+
+.info-box li:nth-child(6n+1) { left: 0; }
+.info-box li:nth-child(6n+2) { left: 5px; }
+.info-box li:nth-child(6n+3) { left: -4px; }
+.info-box li:nth-child(6n+4) { left: 7px; }
+.info-box li:nth-child(6n+5) { left: 3px; }
+.info-box li:nth-child(6n+6) { left: -2px; }
+
+.info-box .box-sub {
+  margin: -6px 0 18px;      /* top: pulls it closer to the title, bottom: space before the bullets */
+  font-size: 0.85rem;       /* smaller text */
+  line-height: 1.4;
+  color: #8a8a8a;           /* dimmer gray so it reads as a subtitle */
+}
 
 /* on phones the boxes stack */
 @media (max-width: 600px) {
