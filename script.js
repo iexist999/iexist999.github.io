@@ -191,7 +191,7 @@ function splitText(root) {
 panels.forEach(panel => {
   panel._chars = [];
   panel.querySelectorAll(":is(h1:not(.hand-title), h2, h3, p, li)").forEach(el => {
-    panel._chars.push(...splitText(el));
+    panel._chars.push(...splitText(el).filter(c => !c.closest(".mode-more")));   // the long "read more" text has its own animation
   });
 });
 
@@ -236,6 +236,7 @@ function switchTo(name) {
   setTimeout(() => {
     if (myToken !== token) return;
 
+    resetModes();                    // leave any opened gamemode box behind
     panels.forEach(panel => { panel.hidden = panel.id !== name; });
 
     const incoming = document.getElementById(name);
@@ -287,9 +288,17 @@ document.querySelectorAll(".mode-list li, .info-box").forEach(addScribbleBox);
 
 // ---------- Gamemode layout ----------
 const modeList = document.querySelector(".mode-list");
+let openLi = null;       // the box that is currently opened ("read more")
+let openListW = 0;       // list width at the moment it was opened
+let modeBusy = false;    // true while an open/close animation runs
+let modeRun = 0;         // lets a reset cancel an animation that is still running
 
 // stagger: left, right, left... each box starts at the vertical middle of the previous one
 function layoutModeBoxes() {
+  if (modeList.classList.contains("has-open")) {      // a box is opened: leave the layout alone...
+    if (modeList.clientWidth !== openListW) resetModes();   // ...unless the list got a new width
+    return;
+  }
   const items = [...modeList.children];
   const stagger = window.matchMedia("(min-width: 601px)").matches;
 
@@ -371,4 +380,165 @@ if (window.matchMedia("(hover: hover)").matches && !reduceMotion.matches) {
     box.addEventListener("mouseenter", () => setTarget(1));
     box.addEventListener("mouseleave", () => setTarget(0));
   });
+}
+
+// ---------- Gamemode "read more" ----------
+const MORE_MOVE_MS = 500;       // how long the box takes to move to the middle and grow
+const MORE_FADE_MS = 200;       // fade time of the other boxes and the short text
+const MORE_TEXT_MAX_MS = 450;   // the long text's letters all start fading within this time
+const MORE_WIDTH = 0.86;        // opened box width as a share of the list width (phones use all of it)
+const MORE_MAX_W = 640;         // ...but never wider than this many px
+
+const wait = ms => new Promise(r => setTimeout(r, reduceMotion.matches ? 0 : ms));
+
+// if the opened box would end up off screen, glide to it
+function scrollToOpen(top, height) {
+  const boxTop = modeList.getBoundingClientRect().top + top;
+  if (boxTop >= 0 && boxTop + height <= window.innerHeight) return;
+  window.scrollBy({
+    top: boxTop + height / 2 - window.innerHeight / 2,
+    behavior: reduceMotion.matches ? "auto" : "smooth"
+  });
+}
+
+// same letter-by-letter fade as the tabs; returns how long it takes
+function playMoreText(more) {
+  const chars = more._chars;
+  chars.forEach(c => c.getAnimations().forEach(a => a.cancel()));
+
+  if (reduceMotion.matches) {
+    chars.forEach(c => { c.style.opacity = 1; });
+    return 0;
+  }
+
+  const step = Math.min(TEXT_LETTER_MS, MORE_TEXT_MAX_MS / Math.max(chars.length, 1));
+  chars.forEach((c, i) => {
+    c.animate(
+      [{ opacity: 0 }, { opacity: 1 }],
+      { duration: TEXT_FADE_MS, delay: i * step, easing: "ease-out", fill: "both" }
+    );
+  });
+  return chars.length * step + TEXT_FADE_MS;
+}
+
+async function openMode(li) {
+  if (modeBusy || openLi) return;
+  modeBusy = true;
+  const run = ++modeRun;
+  const alive = async ms => { await wait(ms); return run === modeRun; };
+
+  // pin every box where it is, so nothing jumps when the others fade out
+  const items = [...modeList.children];
+  modeList.classList.add("has-open");
+  const rects = items.map(el => ({ top: el.offsetTop, left: el.offsetLeft, width: el.offsetWidth, height: el.offsetHeight }));
+  const listW = modeList.clientWidth;
+  const listH = modeList.offsetHeight;
+  openListW = listW;
+  modeList.style.height = listH + "px";
+  items.forEach((el, i) => {
+    Object.assign(el.style, {
+      position: "absolute", top: rects[i].top + "px", left: rects[i].left + "px",
+      right: "auto", width: rects[i].width + "px"
+    });
+  });
+  const home = rects[items.indexOf(li)];
+  li._home = home;
+  li.style.height = home.height + "px";
+
+  // measure the box with the long text in it (and lock the text's width, so it never re-wraps while the box grows)
+  const more = li.querySelector(".mode-more");
+  const narrow = !window.matchMedia("(min-width: 601px)").matches;
+  const w = Math.min(listW, MORE_MAX_W, Math.round(listW * (narrow ? 1 : MORE_WIDTH)));
+  li.classList.add("show-more");
+  li.style.width = w + "px";
+  li.style.height = "auto";
+  const h = li.offsetHeight;
+  more.style.width = more.offsetWidth + "px";
+  li.classList.remove("show-more");
+  li.style.width = home.width + "px";
+  li.style.height = home.height + "px";
+  void li.offsetWidth;                             // flush, so everything below animates from the old state
+
+  // everything starts at once: other boxes fade, short text fades, this box moves to the middle and grows
+  if (h > listH) modeList.style.height = h + "px"; // the list grows if the box doesn't fit
+  const top = (Math.max(listH, h) - h) / 2;
+  items.forEach(el => { if (el !== li) el.classList.add("faded"); });
+  li.classList.add("is-open", "text-out");
+  Object.assign(li.style, { top: top + "px", left: (listW - w) / 2 + "px", width: w + "px", height: h + "px" });
+  scrollToOpen(top, h);
+
+  // as soon as the short text is gone, the long text writes itself in while the box is still settling
+  if (!await alive(MORE_FADE_MS)) return;
+  li.classList.add("show-more", "more-in");
+  openLi = li;
+  const textMs = playMoreText(more);
+  if (!await alive(Math.max(MORE_MOVE_MS - MORE_FADE_MS, textMs))) return;
+  modeBusy = false;
+  li.querySelector(".mode-back").focus({ preventScroll: true });
+}
+
+async function closeMode() {
+  const li = openLi;
+  if (!li || modeBusy) return;
+  modeBusy = true;
+  const run = ++modeRun;
+  const alive = async ms => { await wait(ms); return run === modeRun; };
+
+  li.classList.remove("more-in");                  // long text fades out
+  if (!await alive(MORE_FADE_MS)) return;
+
+  // short text and the other boxes fade back in while this box shrinks back to its place
+  li.classList.remove("show-more");
+  void li.offsetWidth;                             // flush, so the short text can fade (not pop) in
+  li.classList.remove("text-out");
+  modeList.querySelectorAll("li.faded").forEach(el => el.classList.remove("faded"));
+  const home = li._home;
+  Object.assign(li.style, { top: home.top + "px", left: home.left + "px", width: home.width + "px", height: home.height + "px" });
+  if (!await alive(MORE_MOVE_MS)) return;
+
+  resetModes();
+  li.querySelector(".read-more").focus({ preventScroll: true });
+}
+
+// back to the normal layout instantly (also used when switching tabs or resizing)
+function resetModes() {
+  if (!modeList || !modeList.classList.contains("has-open")) return;
+  modeRun++;
+  modeList.classList.remove("has-open");
+  modeList.style.height = "";
+  modeList.querySelectorAll("li").forEach(el => {
+    el.removeAttribute("style");
+    el.classList.remove("is-open", "faded", "text-out", "show-more", "more-in");
+    const more = el.querySelector(".mode-more");
+    if (more) {
+      more.style.width = "";
+      (more._chars || []).forEach(c => { c.getAnimations().forEach(a => a.cancel()); c.style.opacity = ""; });
+    }
+  });
+  openLi = null;
+  modeBusy = false;
+  layoutModeBoxes();
+}
+
+if (modeList) {
+  modeList.style.setProperty("--move-ms", MORE_MOVE_MS + "ms");
+  modeList.style.setProperty("--more-fade-ms", MORE_FADE_MS + "ms");
+  modeList.querySelectorAll("li").forEach(li => {
+    const more = li.querySelector(".mode-more");
+    const readMore = li.querySelector(".read-more");
+    if (!more || !readMore) return;
+
+    const back = document.createElement("button");
+    back.type = "button";
+    back.className = "mode-back";
+    back.textContent = "<<back";
+    back.addEventListener("click", closeMode);
+    more.append(back);
+
+    splitText(back);                               // so "<<back" writes itself in with the rest
+    more._chars = [...more.querySelectorAll(".char")];
+
+    readMore.addEventListener("click", () => openMode(li));
+  });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") closeMode(); });
 }

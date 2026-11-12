@@ -455,3 +455,80 @@ body {
 }
 .box .l { top: 0; left: 0;    transform: translateY(calc(100cqh - var(--b))) rotate(-90deg); }
 .box .r { top: 0; left: 100%; transform: translateY(var(--b)) rotate(90deg); }
+
+/* ==========================================================
+   Gamemode "read more"
+   ========================================================== */
+.read-more,
+.mode-back {
+  display: block;
+  margin: 10px 0 0 10px;
+  padding: 0;
+  background: none;
+  border: none;
+  font-family: var(--text-font);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--accent);                /* blue, link-looking */
+  cursor: pointer;
+  text-decoration: underline transparent;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  transition: text-decoration-color 0.2s ease, opacity var(--more-fade-ms, 200ms) ease;
+}
+.read-more:hover,
+.mode-back:hover { text-decoration-color: currentColor; }
+
+.read-more:focus-visible,
+.mode-back:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+/* the longer text (hidden until a box is opened) */
+.mode-more {
+  display: none;
+  opacity: 0;
+  margin: 8px 0 0 10px;
+  font-family: var(--text-font);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #cfcfcf;
+  transition: opacity var(--more-fade-ms, 200ms) ease;
+}
+.mode-more .mode-back { margin: 14px 0 0; }
+
+.mode-desc { transition: opacity var(--more-fade-ms, 200ms) ease; }
+
+/* while a box is opened (classes are set by script.js) */
+.mode-list.has-open { position: relative; }
+.mode-list.has-open li { transition: opacity var(--more-fade-ms, 200ms) ease; }
+.mode-list.has-open li.is-open {
+  transition: top var(--move-ms, 700ms) ease-out,
+              left var(--move-ms, 700ms) ease-out,
+              width var(--move-ms, 700ms) ease-out,
+              height var(--move-ms, 700ms) ease-out;
+}
+
+.mode-list li.faded { opacity: 0; pointer-events: none; }
+
+.mode-list li.text-out .mode-desc,
+.mode-list li.text-out .read-more { opacity: 0; }
+
+.mode-list li.show-more .mode-desc,
+.mode-list li.show-more .read-more { display: none; }
+.mode-list li.show-more .mode-more { display: block; }
+.mode-list li.more-in .mode-more   { opacity: 1; transition: none; }   /* the letters do the fading in */
+
+@media (prefers-reduced-motion: reduce) {
+  .mode-list li, .mode-desc, .mode-more, .read-more, .mode-back { transition: none !important; }
+}
+
+/* "read more>>" sits on the title row, at the right edge */
+.read-more {
+  float: right;
+  margin: 0 0 0 12px;
+  line-height: calc(1.4 * clamp(1.15rem, 3.5vw, 1.4rem));   /* same height as the title line */
+}
+
+.mode-list.has-open li.is-open { z-index: 1; }   /* travels above the faded boxes */
