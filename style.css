@@ -502,7 +502,7 @@ body {
 
 /* while a box is opened (classes are set by script.js) */
 .mode-list.has-open { position: relative; }
-.mode-list.has-open li { transition: opacity var(--more-fade-ms, 200ms) ease; }
+.mode-list.has-open li { transition: opacity var(--more-dim-ms, 800ms) ease; }
 .mode-list.has-open li.is-open {
   transition: top var(--move-ms, 700ms) ease-out,
               left var(--move-ms, 700ms) ease-out,
@@ -510,7 +510,7 @@ body {
               height var(--move-ms, 700ms) ease-out;
 }
 
-.mode-list li.faded { opacity: 0; pointer-events: none; }
+.mode-list li.faded { opacity: var(--more-dim, 0.1); pointer-events: none; }
 
 .mode-list li.text-out .mode-desc,
 .mode-list li.text-out .read-more { opacity: 0; }

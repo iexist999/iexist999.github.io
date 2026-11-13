@@ -304,8 +304,7 @@ function layoutModeBoxes() {
 
   modeList.classList.toggle("staggered", stagger);
   items.forEach(li => { li.style.top = ""; });
-  modeList.style.height = "";
-  if (!stagger) return;              // phones: normal stacked list
+  if (!stagger) { modeList.style.height = ""; return; }              // phones: normal stacked list
 
   const tops = [], heights = [], bottoms = [];
   items.forEach((li, i) => {
@@ -386,19 +385,44 @@ if (window.matchMedia("(hover: hover)").matches && !reduceMotion.matches) {
 const MORE_MOVE_MS = 500;       // how long the box takes to move to the middle and grow
 const MORE_FADE_MS = 200;       // fade time of the other boxes and the short text
 const MORE_TEXT_MAX_MS = 450;   // the long text's letters all start fading within this time
+const MORE_DIM_MS = 800;       // how slowly the other boxes dim (and come back)
+const MORE_DIM = 0.1;          // how visible the other boxes stay while one is opened (0.1 = 10%)
+const MORE_SCROLL_MS = 3200;   // the slow scroll that puts the opened box in the middle of the screen
 const MORE_WIDTH = 0.86;        // opened box width as a share of the list width (phones use all of it)
 const MORE_MAX_W = 640;         // ...but never wider than this many px
 
 const wait = ms => new Promise(r => setTimeout(r, reduceMotion.matches ? 0 : ms));
 
-// if the opened box would end up off screen, glide to it
+// slow, ultra-smooth scroll. It shares scrollFrame with the tab scroll above, so wheel / touch / keys already cancel it
+function glideTo(target, ms) {
+  cancelAnimationFrame(scrollFrame);
+  const start = window.scrollY;
+  const distance = target - start;
+  if (Math.abs(distance) < 4) return;
+
+  if (reduceMotion.matches) {
+    window.scrollTo(0, target);
+    return;
+  }
+
+  const t0 = performance.now();
+  function step(now) {
+    const t = Math.min((now - t0) / ms, 1);
+    const eased = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;   // slow start, slow end
+    window.scrollTo(0, start + distance * eased);
+    if (t < 1) scrollFrame = requestAnimationFrame(step);
+  }
+  scrollFrame = requestAnimationFrame(step);
+}
+
+// grabbing the scrollbar cancels it too
+window.addEventListener("mousedown", () => cancelAnimationFrame(scrollFrame), { passive: true });
+
+// scroll so the opened box ends up in the middle of the screen
 function scrollToOpen(top, height) {
-  const boxTop = modeList.getBoundingClientRect().top + top;
-  if (boxTop >= 0 && boxTop + height <= window.innerHeight) return;
-  window.scrollBy({
-    top: boxTop + height / 2 - window.innerHeight / 2,
-    behavior: reduceMotion.matches ? "auto" : "smooth"
-  });
+  const boxMiddle = modeList.getBoundingClientRect().top + window.scrollY + top + height / 2;
+  const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+  glideTo(Math.max(0, Math.min(boxMiddle - window.innerHeight / 2, maxScroll)), MORE_SCROLL_MS);
 }
 
 // same letter-by-letter fade as the tabs; returns how long it takes
@@ -480,6 +504,7 @@ async function openMode(li) {
 async function closeMode() {
   const li = openLi;
   if (!li || modeBusy) return;
+  cancelAnimationFrame(scrollFrame);              // stop a slow scroll that is still gliding
   modeBusy = true;
   const run = ++modeRun;
   const alive = async ms => { await wait(ms); return run === modeRun; };
@@ -494,7 +519,7 @@ async function closeMode() {
   modeList.querySelectorAll("li.faded").forEach(el => el.classList.remove("faded"));
   const home = li._home;
   Object.assign(li.style, { top: home.top + "px", left: home.left + "px", width: home.width + "px", height: home.height + "px" });
-  if (!await alive(MORE_MOVE_MS)) return;
+  if (!await alive(Math.max(MORE_MOVE_MS, MORE_DIM_MS))) return;
 
   resetModes();
   li.querySelector(".read-more").focus({ preventScroll: true });
@@ -504,8 +529,9 @@ async function closeMode() {
 function resetModes() {
   if (!modeList || !modeList.classList.contains("has-open")) return;
   modeRun++;
+  cancelAnimationFrame(scrollFrame);
+  const keepY = window.scrollY;
   modeList.classList.remove("has-open");
-  modeList.style.height = "";
   modeList.querySelectorAll("li").forEach(el => {
     el.removeAttribute("style");
     el.classList.remove("is-open", "faded", "text-out", "show-more", "more-in");
@@ -518,11 +544,14 @@ function resetModes() {
   openLi = null;
   modeBusy = false;
   layoutModeBoxes();
+  if (window.scrollY !== keepY) window.scrollTo(0, keepY);   // never let the page jump
 }
 
 if (modeList) {
   modeList.style.setProperty("--move-ms", MORE_MOVE_MS + "ms");
   modeList.style.setProperty("--more-fade-ms", MORE_FADE_MS + "ms");
+  modeList.style.setProperty("--more-dim-ms", MORE_DIM_MS + "ms");
+  modeList.style.setProperty("--more-dim", MORE_DIM);
   modeList.querySelectorAll("li").forEach(li => {
     const more = li.querySelector(".mode-more");
     const readMore = li.querySelector(".read-more");
@@ -541,4 +570,5 @@ if (modeList) {
     readMore.addEventListener("click", () => openMode(li));
   });
   document.addEventListener("keydown", e => { if (e.key === "Escape") closeMode(); });
+  document.addEventListener("visibilitychange", () => { if (document.hidden) resetModes(); });   // switched browser tab: it is closed when you come back
 }
