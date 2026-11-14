@@ -1,0 +1,39 @@
+<p>tiles fall one at a time and crumble into sand the moment they land. the sand piles up and disperses naturally. its behavior is dictated by the selected difficulty level.<br />at lower difficulties, the sand spreads uniformly, forming symmetric pyramid-like structures. at higher ones, sand is replaced by other, less granular materials such as damp dirt or clay.</p>
+<p>as the game progresses, the tiles fall faster and faster, so you have less time to strategize your next move.</p>
+<p>your goal, is to make a connection between both of the horiztonal map borders using same-color sand. if you successfully do so, every sand pixel, that made the connection will be removed. you need to prevent sand from reaching the top of the map, in which case, if there is no more space for new tiles to spawn, the game is over.</p>
+<p><strong>DIFFICULTY LIST:</strong></p>
+<p><strong>DIF1 - Relax:</strong> this gamemode is meant for a more relaxed and less demanding gameplay.</p>
+<p><strong>KEY CHANGES:</strong></p>
+<ul>
+<li>granularity set to 100% - sand forms perfectly symmetric piles</li>
+<li>significantly slowed game speed - tiles fall much slower, and dont speed up</li>
+<li>4 classic sand colors</li>
+<li>7 classic tile shapes</li>
+<li>[OPTIONAL] modificators can be enabled!</li>
+</ul>
+<p> </p>
+<p><strong>DIF2 - Very Easy:</strong> slightly easier than easy :P</p>
+<p><strong>KEY CHANGES:</strong></p>
+<ul>
+<li>granularity locked to 70% - we're not using pure sand no more</li>
+<li>slow game speed, but it speeds up over time. not by much, but it does</li>
+<li>4 classic sand colors</li>
+<li>7 classic tile shapes</li>
+</ul>
+<p> </p>
+<p><strong>DIF3 - Easy</strong></p>
+<p><strong>KEY CHANGES</strong></p>
+<ul>
+<li>granularity locked to 70%</li>
+<li>slightly faster than DIF2, and it also speeds up faster</li>
+<li>4 classic sand colors</li>
+<li>7 classic tile shapes</li>
+</ul>
+<p> </p>
+<p><strong>DIF4 - Medium:</strong> the standard experience</p>
+<p><strong>KEY CHANGES</strong></p>
+<ul>
+<li>granularity locked to 50%</li>
+<li>standard game speed, standard speed up</li>
+</ul>
+<p> </p>
