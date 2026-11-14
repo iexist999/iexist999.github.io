@@ -428,6 +428,8 @@ function scrollToOpen(top, height) {
 // same letter-by-letter fade as the tabs; returns how long it takes
 function playMoreText(more) {
   const chars = more._chars;
+  const tags = [...more.querySelectorAll(".mode-tag")];
+  tags.forEach(t => t.getAnimations().forEach(a => a.cancel()));
   chars.forEach(c => c.getAnimations().forEach(a => a.cancel()));
 
   if (reduceMotion.matches) {
@@ -435,6 +437,9 @@ function playMoreText(more) {
     return 0;
   }
 
+  tags.forEach((t, i) => {                         // the little gray boxes fade in one after another
+    t.animate([{ opacity: 0 }, { opacity: 1 }], { duration: TEXT_FADE_MS, delay: i * 60, easing: "ease-out", fill: "both" });
+  });
   const step = Math.min(TEXT_LETTER_MS, MORE_TEXT_MAX_MS / Math.max(chars.length, 1));
   chars.forEach((c, i) => {
     c.animate(
@@ -538,6 +543,7 @@ function resetModes() {
     const more = el.querySelector(".mode-more");
     if (more) {
       more.style.width = "";
+      more.querySelectorAll(".mode-tag").forEach(t => t.getAnimations().forEach(a => a.cancel()));
       (more._chars || []).forEach(c => { c.getAnimations().forEach(a => a.cancel()); c.style.opacity = ""; });
     }
   });

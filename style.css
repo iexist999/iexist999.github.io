@@ -532,3 +532,25 @@ body {
 }
 
 .mode-list.has-open li.is-open { z-index: 1; }   /* travels above the faded boxes */
+
+/* ==========================================================
+   Feature tags (little gray boxes under the name of an opened gamemode)
+   Add one <span class="mode-tag">...</span> per tag inside .mode-tags in index.html
+   ========================================================== */
+.mode-tags {
+  display: flex;
+  flex-wrap: wrap;                     /* one line, unless there are too many to fit */
+  gap: 6px;
+  margin: 2px 0 12px;
+}
+
+.mode-tag {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 7px;
+  background: #363636;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: #dcdcdc;
+  white-space: nowrap;
+}
