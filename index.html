@@ -46,63 +46,167 @@
 		<strong>classicSand</strong>!
 		<button class="read-more" type="button">read more&gt;&gt;</button>
 		<span class="mode-desc">the classic experience. tiles crumble into sand upon landing.</span>
-		<span class="mode-more">
+		<div class="mode-more">
 			<span class="mode-tags">
+				<span class="mode-tag">casual</span>
 				<span class="mode-tag">singleplayer</span>
-				<span class="mode-tag">3 difficulty modes</span>
+				<span class="mode-tag">6 difficulty modes</span>
 			</span>
-			tiles fall one at a time and crumble into sand the moment they land. the sand piles up and spreads out on its own, so every tile you place changes the ground for the next one. link both walls with an unbroken line of sand to clear it and keep going.
-		</span>
+			<div class="mode-body">
+				<p><strong>GENERAL DESCRIPTION</strong></p>
+				<p>tiles fall one at a time and crumble into sand the moment they land. the sand piles up and disperses naturally. its behavior is dictated by the selected difficulty level.<br />at lower difficulties, the sand spreads uniformly, forming symmetric pyramid-like structures. at higher ones, sand is replaced by other, less granular materials such as damp dirt or clay.</p>
+				<p>as the game progresses, the tiles fall faster and faster, so you have less time to strategize your next move.</p>
+				<p>your goal, is to make a connection between both of the horiztonal map borders using same-color sand. if you successfully do so, every sand pixel, that made the connection will be removed. you need to prevent sand from reaching the top of the map, in which case, if there is no more space for new tiles to spawn, the game is over.</p>
+				<p><strong>DIFFICULTY LIST:</strong></p>
+				<p><span class="dif-tag">DIF1</span> <strong>- Relax:</strong> this gamemode is meant for a more relaxed and less demanding gameplay.</p>
+				<p><strong>KEY CHANGES</strong></p>
+				<ul>
+				<li>granularity set to 100% - sand forms perfectly symmetric piles</li>
+				<li>significantly slowed game speed - tiles fall much slower, and dont speed up</li>
+				<li>additional delay before spawning new tiles</li>
+				<li>4 classic sand colors</li>
+				<li>7 classic tile shapes</li>
+				<li>unfiltered random tile selection mode <span class="hint" tabindex="0" data-tip="tiles are picked completely at random, so the same shape can show up several times in a row.">[?]</span></li>
+				<li>unfiltered random color selection mode <span class="hint" tabindex="0" data-tip="colors are picked completely at random, so the same color can show up several times in a row.">[?]</span></li>
+				</ul>
+				<p> </p>
+				<p><span class="dif-tag">DIF2</span> <strong>- Very Easy:</strong> slightly easier than easy :P</p>
+				<p><strong>KEY CHANGES</strong></p>
+				<ul>
+				<li>granularity locked to 70% - we're not using pure sand no more</li>
+				<li>slow game speed, but it speeds up over time. not by much, but it does</li>
+				<li>4 classic sand colors</li>
+				<li>7 classic tile shapes</li>
+				<li>unfiltered random tile selection mode <span class="hint" tabindex="0" data-tip="tiles are picked completely at random, so the same shape can show up several times in a row.">[?]</span></li>
+				<li>unfiltered random color selection mode <span class="hint" tabindex="0" data-tip="colors are picked completely at random, so the same color can show up several times in a row.">[?]</span></li>
+				</ul>
+				<p> </p>
+				<p><span class="dif-tag">DIF3</span> <strong>- Easy</strong></p>
+				<p><strong>KEY CHANGES</strong></p>
+				<ul>
+				<li>granularity locked to 50%</li>
+				<li>slightly faster than DIF2, and it also speeds up faster</li>
+				<li>4 classic sand colors</li>
+				<li>7 classic tile shapes</li>
+				<li>unfiltered random tile selection mode <span class="hint" tabindex="0" data-tip="tiles are picked completely at random, so the same shape can show up several times in a row.">[?]</span></li>
+				<li>unfiltered random color selection mode <span class="hint" tabindex="0" data-tip="colors are picked completely at random, so the same color can show up several times in a row.">[?]</span></li>
+				</ul>
+				<p> </p>
+				<p><span class="dif-tag">DIF4</span> <strong>- Medium:</strong> the standard experience.</p>
+				<p><strong>KEY CHANGES</strong></p>
+				<ul>
+				<li>granularity locked to 30%</li>
+				<li>standard game speed. standard speed up</li>
+				<li>4 classic sand colors</li>
+				<li>7 classic tile shapes</li>
+				<li>unfiltered random tile selection mode <span class="hint" tabindex="0" data-tip="tiles are picked completely at random, so the same shape can show up several times in a row.">[?]</span></li>
+				<li>unfiltered random color selection mode <span class="hint" tabindex="0" data-tip="colors are picked completely at random, so the same color can show up several times in a row.">[?]</span></li>
+				</ul>
+				<p> </p>
+				<p><span class="dif-tag">DIF5</span> <strong>- Hard:</strong> slightly more difficult.</p>
+				<p><strong>KEY CHANGES</strong></p>
+				<ul>
+				<li>granularity locked to 30%</li>
+				<li>gamespeed is higher and it speeds up significantly</li>
+				<li>4 classic sand colors</li>
+				<li>7 classic tile shapes</li>
+				<li>unfiltered random tile selection mode <span class="hint" tabindex="0" data-tip="tiles are picked completely at random, so the same shape can show up several times in a row.">[?]</span></li>
+				<li class="optional">[OPTIONAL] filtered random color selection - up to 3 same-color tiles in a row</li>
+				</ul>
+				<p> </p>
+				<p><span class="dif-tag">DIF6</span> <strong>- Very Hard:</strong> significantly more difficult. you'd need to lock in for this one.</p>
+				<p><strong>KEY CHANGES</strong></p>
+				<ul>
+				<li>granularity locked to 20%</li>
+				<li>extreme gamespeed and speedup factor</li>
+				<li>random X spawn position for new tiles</li>
+				<li>4 classic sand colors</li>
+				<li>7 classic tile shapes + 4 extra large tile shapes</li>
+				<li>unfiltered random tile selection mode <span class="hint" tabindex="0" data-tip="tiles are picked completely at random, so the same shape can show up several times in a row.">[?]</span></li>
+				<li class="optional">[OPTIONAL] filtered random color selection - up to 3 same-color tiles in a row</li>
+				</ul>
+				<p> </p>
+				<p><span class="dif-tag">DIF7</span> <strong>- Insanely Hard:</strong> this is the point the game becomes close to barely playable</p>
+				<p><strong>KEY CHANGES</strong></p>
+				<ul>
+				<li>granularity locked to 10%</li>
+				<li>absurd game speed</li>
+				<li>random X spawn position for new tiles</li>
+				<li>4 classic sand colors</li>
+				<li>7 classic tile shapes + 4 extra large tile shapes</li>
+				<li>unfiltered random tile selection mode <span class="hint" tabindex="0" data-tip="tiles are picked completely at random, so the same shape can show up several times in a row.">[?]</span></li>
+				<li class="optional">[OPTIONAL] filtered random color selection - up to 3 same-color tiles in a row</li>
+				</ul>
+			</div>
+		</div>
 	  </li>
 	  <li>
 		<strong>classicSandPlus</strong>!
 		<button class="read-more" type="button">read more&gt;&gt;</button>
 		<span class="mode-desc">a classic gamemode featuring extra modifications like lava blocks or bombs.</span>
-		<span class="mode-more">
+		<div class="mode-more">
 			<span class="mode-tags">
 				<span class="mode-tag">singleplayer</span>
 				<span class="mode-tag">3 difficulty modes</span>
 				<span class="mode-tag">lava blocks</span>
 				<span class="mode-tag">bombs</span>
 			</span>
-			everything from classicSand, plus extra pieces mixed into the falling tiles. lava blocks and bombs shake up the terrain, so you will have to plan around them (or put them to good use).
-		</span>
+			<div class="mode-body">
+				everything from classicSand, plus extra pieces mixed into the falling tiles. lava blocks and bombs shake up the terrain, so you will have to plan around them (or put them to good use).
+			</div>
+		</div>
 	  </li>
 	  <li>
 		<strong>elementSoup</strong>!
 		<button class="read-more" type="button">read more&gt;&gt;</button>
 		<span class="mode-desc">a classic gamemode with multiple materials like sand, water, stone, honey and more!</span>
-		<span class="mode-more">
+		<div class="mode-more">
 			<span class="mode-tags">
 				<span class="mode-tag">singleplayer</span>
 				<span class="mode-tag">multiple materials</span>
 			</span>
-			sand is only the beginning. water, stone, honey and other materials each flow and settle in their own way, so it matters what your connection is made of, not just where it sits.
-		</span>
+			<div class="mode-body">
+				sand is only the beginning. water, stone, honey and other materials each flow and settle in their own way, so it matters what your connection is made of, not just where it sits.
+			</div>
+		</div>
 	  </li>
 	  <li>
 		<strong>CHAOS</strong>!
 		<button class="read-more" type="button">read more&gt;&gt;</button>
 		<span class="mode-desc"><b>CHAOTIC!</b> gamemode featuring fun events that happen randomly thoughout the game!</span>
-		<span class="mode-more">
+		<div class="mode-more">
 			<span class="mode-tags">
 				<span class="mode-tag">singleplayer</span>
 				<span class="mode-tag">random events</span>
 			</span>
-			random events strike while you play and you never know what is coming next. adapt on the fly, make the best of it and enjoy the mess!
-		</span>
+			<div class="mode-body">
+				random events strike while you play and you never know what is coming next. adapt on the fly, make the best of it and enjoy the mess!
+			</div>
+		</div>
 	  </li>
 	  <li>
 		<strong>brittleBricks</strong>!
 		<button class="read-more" type="button">read more&gt;&gt;</button>
 		<span class="mode-desc">tiles are made out of brittle brick material, which stays solid, but can crumble upon collision</span>
-		<span class="mode-more">
+		<div class="mode-more">
 			<span class="mode-tags">
 				<span class="mode-tag">singleplayer</span>
 				<span class="mode-tag">brittle tiles</span>
 			</span>
-			tiles stay solid instead of crumbling into sand, but they are brittle. a hard enough collision breaks them apart, so how you drop and stack them really matters.
-		</span>
+			<div class="mode-body">
+				tiles stay solid instead of crumbling into sand, but they are brittle. a hard enough collision breaks them apart, so how you drop and stack them really matters.
+			</div>
+		</div>
+	  </li>
+	  <li class="mode-all">
+		<button class="read-more" type="button">full list of gamemodes</button>
+		<div class="mode-more">
+			<!-- the tabs and their contents are built by script.js from the gamemodes in the list above -->
+			<div class="all-layout">
+				<div class="all-tabs" role="tablist" aria-orientation="vertical"></div>
+				<div class="all-panes"></div>
+			</div>
+		</div>
 	  </li>
 	</ul>
 	</section>

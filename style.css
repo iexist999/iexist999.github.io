@@ -241,7 +241,7 @@ body {
 }
 
 /* anything that gets a scribble background (box layers are added by script.js) */
-.mode-list li,
+.mode-list > li,
 .info-box {
   --b: 28px;                          /* thickness of the border/corner on screen */
   --box-color: #1e1e1e;               /* dye color of every box */
@@ -249,7 +249,7 @@ body {
   isolation: isolate;                 /* keeps the box behind the text, but inside the element */
 }
 
-.mode-list li {
+.mode-list > li {
   width: var(--w, 50%);
   padding: calc(var(--b) * 0.45 + var(--pad-y, 6px)) calc(var(--b) * 0.5 + 8px);
   font-size: clamp(1.15rem, 3.5vw, 1.4rem);
@@ -273,35 +273,35 @@ body {
    --pad-y extra vertical padding
    --shift sideways drift (negative = sticks out past the text edge)
    strong  name color */
-.mode-list li:nth-child(1) { --w: 48%; --pad-y: 6px;  --shift: -16px; }
-.mode-list li:nth-child(2) { --w: 53%; --pad-y: 10px; --shift: -8px;  }
-.mode-list li:nth-child(3) { --w: 50%; --pad-y: 4px;  --shift: 6px;   }
-.mode-list li:nth-child(4) { --w: 46%; --pad-y: 12px; --shift: -14px; }
-.mode-list li:nth-child(5) { --w: 52%; --pad-y: 8px;  --shift: -4px;  }
+.mode-list > li:nth-child(1) { --w: 48%; --pad-y: 6px;  --shift: -16px; }
+.mode-list > li:nth-child(2) { --w: 53%; --pad-y: 10px; --shift: -8px;  }
+.mode-list > li:nth-child(3) { --w: 50%; --pad-y: 4px;  --shift: 6px;   }
+.mode-list > li:nth-child(4) { --w: 46%; --pad-y: 12px; --shift: -14px; }
+.mode-list > li:nth-child(5) { --w: 52%; --pad-y: 8px;  --shift: -4px;  }
 
-.mode-list li:nth-child(1) strong { color: #fff1a8; }  /* yellow */
-.mode-list li:nth-child(2) strong { color: #5eab3e; }  /* green */
-.mode-list li:nth-child(3) strong { color: #8fd3ff; }  /* blue */
-.mode-list li:nth-child(4) strong { color: #ff9aa2; }  /* red */
-.mode-list li:nth-child(5) strong { color: #ffbf80; }  /* orange */
+.mode-list > li:nth-child(1) > strong { color: #fff1a8; }  /* yellow */
+.mode-list > li:nth-child(2) > strong { color: #5eab3e; }  /* green */
+.mode-list > li:nth-child(3) > strong { color: #8fd3ff; }  /* blue */
+.mode-list > li:nth-child(4) > strong { color: #ff9aa2; }  /* red */
+.mode-list > li:nth-child(5) > strong { color: #ffbf80; }  /* orange */
 
 /* odd = left, even = right */
-.mode-list li:nth-child(odd)  { align-self: flex-start; }
-.mode-list li:nth-child(even) { align-self: flex-end; }
+.mode-list > li:nth-child(odd)  { align-self: flex-start; }
+.mode-list > li:nth-child(even) { align-self: flex-end; }
 
 /* ---------- Staggered layout (desktop, positions set by script.js) ---------- */
 .mode-list.staggered { position: relative; }
 
-.mode-list.staggered li {
+.mode-list.staggered > li {
   position: absolute;
   margin: 0;
 }
-.mode-list.staggered li:nth-child(odd)  { left:  var(--shift, 0px); }
-.mode-list.staggered li:nth-child(even) { right: var(--shift, 0px); }
+.mode-list.staggered > li:nth-child(odd)  { left:  var(--shift, 0px); }
+.mode-list.staggered > li:nth-child(even) { right: var(--shift, 0px); }
 
 /* on phones, half the width is too cramped */
 @media (max-width: 600px) {
-  .mode-list li { width: 88%; }
+  .mode-list > li { width: 88%; }
 }
 
 /* ==========================================================
@@ -460,7 +460,7 @@ body {
    Gamemode "read more"
    ========================================================== */
 .read-more,
-.mode-back {
+.mode-close {
   display: block;
   margin: 10px 0 0 10px;
   padding: 0;
@@ -477,10 +477,10 @@ body {
   transition: text-decoration-color 0.2s ease, opacity var(--more-fade-ms, 200ms) ease;
 }
 .read-more:hover,
-.mode-back:hover { text-decoration-color: currentColor; }
+.mode-close:hover { text-decoration-color: currentColor; }
 
 .read-more:focus-visible,
-.mode-back:focus-visible {
+.mode-close:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 4px;
 }
@@ -496,42 +496,41 @@ body {
   color: #cfcfcf;
   transition: opacity var(--more-fade-ms, 200ms) ease;
 }
-.mode-more .mode-back { margin: 14px 0 0; }
-
 .mode-desc { transition: opacity var(--more-fade-ms, 200ms) ease; }
 
 /* while a box is opened (classes are set by script.js) */
 .mode-list.has-open { position: relative; }
-.mode-list.has-open li { transition: opacity var(--more-dim-ms, 800ms) ease; }
-.mode-list.has-open li.is-open {
+.mode-list.has-open > li { transition: opacity var(--more-dim-ms, 800ms) ease; }
+.mode-list.has-open > li.is-open {
   transition: top var(--move-ms, 700ms) ease-out,
               left var(--move-ms, 700ms) ease-out,
               width var(--move-ms, 700ms) ease-out,
               height var(--move-ms, 700ms) ease-out;
 }
 
-.mode-list li.faded { opacity: var(--more-dim, 0.1); pointer-events: none; }
+.mode-list > li.faded { opacity: var(--more-dim, 0.1); pointer-events: none; }
 
-.mode-list li.text-out .mode-desc,
-.mode-list li.text-out .read-more { opacity: 0; }
+.mode-list > li.text-out .mode-desc,
+.mode-list > li.text-out .read-more { opacity: 0; }
 
-.mode-list li.show-more .mode-desc,
-.mode-list li.show-more .read-more { display: none; }
-.mode-list li.show-more .mode-more { display: block; }
-.mode-list li.more-in .mode-more   { opacity: 1; transition: none; }   /* the letters do the fading in */
+.mode-list > li.show-more .mode-desc,
+.mode-list > li.show-more .read-more { display: none; }
+.mode-list > li.show-more .mode-more { display: block; }
+.mode-list > li.more-in .mode-more   { opacity: 1; transition: none; }   /* the letters do the fading in */
 
 @media (prefers-reduced-motion: reduce) {
-  .mode-list li, .mode-desc, .mode-more, .read-more, .mode-back { transition: none !important; }
+  .mode-list > li, .mode-desc, .mode-more, .read-more, .mode-close { transition: none !important; }
 }
 
 /* "read more>>" sits on the title row, at the right edge */
-.read-more {
+.read-more,
+.mode-close {
   float: right;
   margin: 0 0 0 12px;
   line-height: calc(1.4 * clamp(1.15rem, 3.5vw, 1.4rem));   /* same height as the title line */
 }
 
-.mode-list.has-open li.is-open { z-index: 1; }   /* travels above the faded boxes */
+.mode-list.has-open > li.is-open { z-index: 1; }   /* travels above the faded boxes */
 
 /* ==========================================================
    Feature tags (little gray boxes under the name of an opened gamemode)
@@ -544,7 +543,8 @@ body {
   margin: 2px 0 12px;
 }
 
-.mode-tag {
+.mode-tag,
+.dif-tag {
   display: inline-block;
   padding: 2px 9px;
   border-radius: 7px;
@@ -553,4 +553,232 @@ body {
   line-height: 1.5;
   color: #dcdcdc;
   white-space: nowrap;
+}
+
+/* ==========================================================
+   Scrolling description + [?] tooltips
+   (the name and the tags stay put, everything inside .mode-body scrolls)
+   ========================================================== */
+.mode-tags { margin-bottom: 6px; }
+
+.mode-body {
+  max-height: 380px;                   /* script.js shrinks this on small windows */
+  overflow-y: auto;
+  overscroll-behavior: contain;        /* scrolling inside never drags the page along */
+  padding: 6px 10px 6px 6px;           /* room for the focus outline and the scrollbar */
+  margin-left: -6px;
+  scrollbar-width: thin;
+  scrollbar-color: #5a5a5a transparent;
+}
+.mode-body::-webkit-scrollbar { width: 8px; }
+.mode-body::-webkit-scrollbar-thumb { background: #5a5a5a; border-radius: 4px; }
+.mode-body::-webkit-scrollbar-track { background: transparent; }
+
+.mode-body p  { margin: 0 0 10px; }
+.mode-body ul { margin: 0 0 10px; padding-left: 22px; }
+.mode-body li + li { margin-top: 1px; }
+.mode-body li.optional { margin-top: 6px; }   /* a little air before the [OPTIONAL] entries */
+.mode-body strong { font-weight: 600; color: #fff; }
+
+.hint { color: #7d7d7d; cursor: help; transition: color 0.15s ease; }
+.hint:hover,
+.hint:focus-visible { color: #cfcfcf; outline: none; }
+
+.hint-tip {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  width: max-content;
+  max-width: min(260px, calc(100vw - 16px));
+  padding: 6px 10px;
+  border-radius: 4px;
+  background: #3a3a3a;
+  color: #e6e6e6;
+  font-family: var(--text-font);
+  font-size: 0.85rem;
+  line-height: 1.4;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.12s ease, visibility 0.12s;
+}
+.hint-tip.on { opacity: 1; visibility: visible; }
+
+/* ==========================================================
+   Close button, tighter lines, difficulty chips
+   ========================================================== */
+/* "close" sits where "read more>>" is while a box is opened */
+.mode-close {
+  display: none;
+  opacity: 0;
+  color: #ff5d5d;                      /* red */
+}
+.mode-list > li.show-more .mode-close { display: block; }
+.mode-list > li.more-in .mode-close   { opacity: 1; transition: none; }
+
+/* space between the lines of text in an opened box (paragraph spacing is separate) */
+.mode-more { --more-line: 1.15; font-size: 0.95rem; line-height: var(--more-line); }
+.mode-body p { line-height: var(--more-line); }
+
+/* DIF1 - Relax etc: smaller, pure white, in a box like the tags */
+.dif-tag {
+  margin-right: 2px;
+  padding: 1px 8px;
+  line-height: 1.1;                    /* keeps the box from stretching its line */
+  color: #ffffff;
+}
+
+/* ==========================================================
+   "full list of gamemodes" - small box at the bottom right of the gamemode list
+   (it is the last <li class="mode-all"> in index.html, script.js places it)
+   ========================================================== */
+@property --b {                       /* lets the border thickness grow smoothly when the box opens */
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 28px;
+}
+
+.mode-list > li.mode-all {
+  --b: 16px;                          /* border thickness while small (smaller = hugs the text tighter) */
+  --pad-y: 2px;                       /* extra vertical padding (smaller = shorter box) */
+  --shift: -4px;                      /* sideways drift, like the other boxes */
+  width: auto;                        /* exactly as wide as the text */
+}
+
+.mode-list > li.mode-all .read-more {
+  float: none;
+  margin: 0;
+  font-size: 0.85rem;                 /* small text */
+  line-height: 1.4;
+  color: #ffffff;                     /* white */
+  white-space: nowrap;
+  text-decoration-thickness: 1px;     /* underline on hover comes from .read-more:hover */
+  text-underline-offset: 3px;
+}
+
+/* the whole little box is clickable, not just the letters */
+.mode-list > li.mode-all .read-more::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+/* opened: normal border thickness like the other boxes, growing together with the box */
+.mode-list > li.mode-all.show-more,
+.mode-list > li.mode-all.is-open { --b: 28px; }
+.mode-list > li.mode-all.is-open.closing { --b: 16px; }
+
+.mode-list.has-open > li.mode-all.is-open {
+  transition: top var(--move-ms, 700ms) ease-out,
+              left var(--move-ms, 700ms) ease-out,
+              width var(--move-ms, 700ms) ease-out,
+              height var(--move-ms, 700ms) ease-out,
+              --b var(--move-ms, 700ms) ease-out;
+}
+
+.mode-all .mode-more { margin: 0; }
+
+/* ==========================================================
+   "full list of gamemodes": discord-style tabs inside the opened box
+   (tabs are built by script.js; sizes of the opened box are ALL_* at the top of that part in script.js)
+   ========================================================== */
+/* "close" sits in the top right corner, next to the name of the selected gamemode */
+.mode-list > li.mode-all .mode-close {
+  position: absolute;
+  top: calc(var(--b) * 0.45 + var(--pad-y, 6px));
+  right: calc(var(--b) * 0.5 + 8px);
+  margin: 0;
+  z-index: 2;
+}
+
+.all-layout {
+  display: flex;
+  gap: 14px;
+  height: 440px;                       /* script.js sets the real height */
+}
+
+/* left: the list of gamemodes */
+.all-tabs {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;                            /* tab buttons almost touch (raise it for more space) */
+  width: 190px;
+  padding-right: 10px;
+  overflow-y: auto;
+  border-right: 1px solid #3a3a3a;
+  scrollbar-width: thin;
+  scrollbar-color: #5a5a5a transparent;
+}
+
+.all-tab {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 2px 8px;                 /* smaller top/bottom = tabs closer together */
+  border: none;
+  border-radius: 6px;
+  background: none;
+  font-family: var(--ui-font);
+  font-size: 1rem;
+  line-height: 1.2;
+  text-align: left;
+  color: var(--c, #cfcfcf);      /* every name in its gamemode color */
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.all-tab:hover { background: #2c2c2c; }
+.all-tab[aria-selected="true"] { background: #3a3a3a; }  /* selected: the gamemode's own color */
+.all-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+.all-icon {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  background: var(--c, #555);          /* shown until/unless the icon image loads */
+  overflow: hidden;
+}
+.all-icon.has-img { background: none; }
+.all-icon img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.all-tab-name { min-width: 0; overflow-wrap: anywhere; }
+
+/* right: name + tags on top (never scroll), the text below scrolls */
+.all-panes { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.all-panel { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.all-panel[hidden] { display: none; }
+
+.all-head { padding-right: 58px; }       /* leaves room for the close button */
+.all-head > strong {
+  display: block;
+  font-family: var(--ui-font);
+  font-size: clamp(1.15rem, 3.5vw, 1.4rem);   /* same as the names in the list */
+  font-weight: 600;
+  line-height: 1.4;
+}
+.all-panel .mode-body { flex: 1; min-height: 0; max-height: none; }
+
+/* phones: the list of gamemodes becomes a row on top */
+@media (max-width: 600px) {
+  .all-layout { flex-direction: column; gap: 8px; }
+  .all-tabs {
+    flex-direction: row;
+    width: auto;
+    padding: 0 0 6px;
+    overflow: auto hidden;
+    border-right: none;
+    border-bottom: 1px solid #3a3a3a;
+  }
+  .all-tab { flex: none; width: auto; white-space: nowrap; }
+}
+
+/* small gamemode icon in front of the name of each box on the home page (added by script.js) */
+.mode-icon {
+  width: 22px;
+  height: 22px;
+  margin-right: 6px;
+  object-fit: contain;
+  vertical-align: middle;
 }

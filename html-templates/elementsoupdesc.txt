@@ -1,0 +1,111 @@
+<p><strong>GENERAL DESCRIPTION</strong></p>
+<p>tiles fall one at a time and crumble into different materials the moment they land. each color is assigned a random material at start, and its locked to that material for the rest of the game<br />at higher difficulties, the pool of potential materials include more tricker behaving ones, like gel, or solids.</p>
+<p>as the game progresses, the tiles fall faster and faster, so you have less time to strategize your next move.</p>
+<p>your goal, is to make a connection between both of the horiztonal map borders using same-color materials. if you successfully do so, every pixel, that made the connection will be removed. you need to prevent pixels from reaching the top of the map, in which case, if there is no more space for new tiles to spawn, the game is over.</p>
+<p><strong>LIST OF POTENTIAL MATERIALS/ELEMENTS:</strong></p>
+<p><strong>Smooth Sand</strong> - Material Type: Powder - Behavior Trickiness: Very Easy<strong><br /></strong>smooth sand is perfectly granular and forms uniform piles.</p>
+<p><strong>Gravel</strong> - Material Type: Powder - Behavior Trickiness: Easy<br />gravel is another granular material, but unlike some others, it doesnt disperse perfectly, and may form irregular piles. this is still a fairly granular material compared to others though</p>
+<p><strong>Sand</strong> - Material Type: Powder - Behavior Trickiness: Easy<br />sand, similarly to gravel, doesnt produce uniform piles. unlike gravel, sand can absorb water, making it heavier and more cohesive</p>
+<p><strong>Damp Dirt</strong> - Material Type: Powder - Behavior Trickiness: Easy<br />damp dirt is much more cohesive than sand or gravel. it forms much steeper and irregular piles.</p>
+<p><strong>Coal</strong> - Material Type: Powder - Behavior Trickiness: Difficult<br />coal forms extremely steep piles, and doesnt disperse well to the sides. piles of this material are usually more tall than they are wide.</p>
+<p><strong>Sawdust</strong> - Material Type: Powder - Behavior Trickiness: Easy<br />this material is much lighter than most other powders. heavier materials falling at high speeds may burrow under several layers of a sawdust pile. unlike most others, this material floats on water.</p>
+<p><strong>Flour</strong> - Material Type: Ash - Behavior Trickiness: Mixed<br />flour is very light and may be easily influenced by airflow. heavier materials falling at high speeds may burrow under several layers of a flour pile. this material also floats on top of water.</p>
+<p><strong>Water</strong> - Material Type: Liquid - Behavior Trickiness: Mixed<br />water spills horizontally filling tiny crevices. it can get absorbed by certain materials like sand. fluid flow may influence the movement of individual pixels within the liquid, while gravity causes water to equalize differences in surface height.</p>
+<p><strong>Motor Oil</strong> - Material Type: Liquid - Behavior Trickiness: Mixed<br />motor oil is less dense than water, thus it stays on top of it. </p>
+<p><strong>Honey</strong> - Material Type: Gel - Behavior Trickiness: Difficult<br />honey is a very thick and viscous gel-like fluid. it disperses very slowly and forms gel-like formations. most powdery materials can stick, or get stuck inside this liquid.</p>
+<p><strong>Stone</strong> - Material Type: Unstable Solid - Behavior Trickiness: Mixed<br />Stone is a semi-solid material. it behaves like an extremely stackable powder unless it has connection with one of the map border, in which case, it turns completely solid.</p>
+<p> </p>
+<p><strong>DIFFICULTY LIST:</strong></p>
+<p><strong>DIF1 - Relax:</strong> this gamemode is meant for a more relaxed and less demanding gameplay.</p>
+<p><strong>KEY CHANGES</strong></p>
+<ul>
+<li>only a few materials are included: smooth sand, water, sand and stone</li>
+<li>significantly slowed game speed - tiles fall much slower, and dont speed up</li>
+<li>additional delay before spawning new tiles</li>
+<li>liquid density is ignored. materials that would normally sink, stay afloat</li>
+<li>liquid absorption is enabled, and wet materials can still form clears with their dry counterparts</li>
+<li>4 classic sand colors</li>
+<li>7 classic tile shapes</li>
+<li>unfiltered random tile selection mode [?]</li>
+<li>unfiltered random color selection mode [?]</li>
+</ul>
+<p> </p>
+<p><strong>DIF2 - Very Easy:</strong> slightly easier than easy :P</p>
+<p><strong>KEY CHANGES</strong></p>
+<ul>
+<li>included materials: smooth sand, water, sand and stone</li>
+<li>slow game speed, but it speeds up over time. not by much, but it does</li>
+<li>liquid density is ignored. materials that would normally sink, stay afloat</li>
+<li>liquid absorption is enabled, and wet materials can still form clears with their dry counterparts</li>
+<li>4 classic sand colors</li>
+<li>7 classic tile shapes</li>
+<li>unfiltered random tile selection mode [?]</li>
+<li>unfiltered random color selection mode [?]</li>
+</ul>
+<p> </p>
+<p><strong>DIF3 - Easy</strong></p>
+<p><strong>KEY CHANGES</strong></p>
+<ul>
+<li>included materials: smooth sand, sand, damp dirt, water and stone</li>
+<li>slightly faster than DIF2, and it also speeds up faster</li>
+<li>liquid density is ignored. materials that would normally sink, stay afloat</li>
+<li>liquid absorption is enabled, and wet materials can still form clears with their dry counterparts</li>
+<li>4 classic sand colors</li>
+<li>7 classic tile shapes</li>
+<li>unfiltered random tile selection mode [?]</li>
+<li>unfiltered random color selection mode [?]</li>
+</ul>
+<p> </p>
+<p><strong>DIF4 - Medium:</strong> the standard experience.</p>
+<p><strong>KEY CHANGES</strong></p>
+<ul>
+<li>included materials: gravel, sand, damp dirt, water, stone, flour, honey and motor oil</li>
+<li>standard game speed. standard speed up</li>
+<li>liquid density is ignored. materials that would normally sink, stay afloat</li>
+<li>liquid absorption is enabled, and wet materials can still form clears with their dry counterparts</li>
+<li>4 classic sand colors</li>
+<li>7 classic tile shapes</li>
+<li>unfiltered random tile selection mode [?]</li>
+<li>unfiltered random color selection mode [?]</li>
+</ul>
+<p> </p>
+<p><strong>DIF5 - Hard:</strong> slightly more difficult.</p>
+<p><strong>KEY CHANGES</strong></p>
+<ul>
+<li>included materials: sand, damp dirt, water, stone, flour, honey and motor oil</li>
+<li>gamespeed is higher and it speeds up slightly more</li>
+<li>liquid density is ignored. materials that would normally sink, stay afloat</li>
+<li>liquid absorption is enabled, and wet materials can still form clears with their dry counterparts</li>
+<li>4 classic sand colors</li>
+<li>7 classic tile shapes</li>
+<li>unfiltered random tile selection mode [?]</li>
+<li>[OPTIONAL] filtered random color selection - up to 3 same-color tiles in a row</li>
+</ul>
+<p> </p>
+<p><strong>DIF6 - Very Hard:</strong> significantly more difficult. you'd need to lock in for this one.</p>
+<p><strong>KEY CHANGES</strong></p>
+<ul>
+<li>included materials: gravel, damp dirt, coal, water, stone, flour, honey and motor oil</li>
+<li>gamespeed is higher and it speeds up slightly more</li>
+<li>random X spawn position for new tiles</li>
+<li>liquid density is NOT ignored. certain materials may sink</li>
+<li>liquid absorption is disabled. sand or dirt cant absorb water anymore</li>
+<li>4 classic sand colors</li>
+<li>7 classic tile shapes + 4 extra large tile shapes</li>
+<li>unfiltered random tile selection mode [?]</li>
+<li>[OPTIONAL] filtered random color selection - up to 3 same-color tiles in a row</li>
+</ul>
+<p> </p>
+<p><strong>DIF7 - Insanely Hard:</strong> this is the point the game becomes close to barely playable</p>
+<p><strong>KEY CHANGES</strong></p>
+<ul>
+<li>all materials are included</li>
+<li>gamespeed is higher and it speeds up slightly more</li>
+<li>random X spawn position for new tiles</li>
+<li>liquid density is NOT ignored. certain materials may sink</li>
+<li>liquid absorption is disabled. sand or dirt cant absorb water anymore</li>
+<li>4 classic sand colors</li>
+<li>7 classic tile shapes + 4 extra large tile shapes</li>
+<li>unfiltered random tile selection mode [?]</li>
+<li>[OPTIONAL] filtered random color selection - up to 3 same-color tiles in a row</li>
+</ul>

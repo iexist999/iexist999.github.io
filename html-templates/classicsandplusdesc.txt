@@ -1,0 +1,108 @@
+<p><strong>GENERAL DESCRIPTION</strong></p>
+<p>tiles fall one at a time and crumble into sand the moment they land. the sand piles up and disperses naturally. its behavior is dictated by the selected difficulty level.<br />at lower difficulties, the sand spreads uniformly, forming symmetric pyramid-like structures. at higher ones, sand is replaced by other, less granular materials such as damp dirt or clay.</p>
+<p>apart from normal sand tiles, this gamemode also features a set of different modificators! those are spawned occasionally, once every 10 to 60 normal tiles. depending on the selected difficulty level, certain modificators may make the gameplay easier or significantly harder!</p>
+<p>as the game progresses, the tiles fall faster and faster, so you have less time to strategize your next move.</p>
+<p>your goal, is to make a connection between both of the horiztonal map borders using same-color sand. if you successfully do so, every sand pixel, that made the connection will be removed. you need to prevent sand from reaching the top of the map, in which case, if there is no more space for new tiles to spawn, the game is over.</p>
+<p><strong>LIST OF MODIFICATORS:</strong></p>
+<p><strong>Lava Block </strong>- (Positive Modificator) - Modificator Rarity: Common<strong><br /></strong>a standard shaped tile, made entirely out of lava. it vaporizes any material it gets in contact with. depending on the selected difficulty level, one lava pixel may equal up to 10 removed sand pixels.</p>
+<p><strong>Bomb </strong>- (Positive Modificator) - Modificator Rarity: Fairly Common<strong><br /></strong>a small black colored square, which explodes on contact with matter, removing nearby pixels in its effective range. depending on the selected difficulty level, the range of the explosion may vary slightly.</p>
+<p><strong>Colorshifter </strong>- (Neutral Modificator) - Modificator Rarity: Uncommon<strong><br /></strong>a small rainbow colored square, which fires a circular field that expands, and modifies the color of the sand within its range. switch rules are applied randomly for each shifter, meaning one can turn the color green to red, while another one may turn the same color to yellow. depending on the selected difficulty level, the range of the field may vary. also, on lower difficulties, the color switch may be applied to entire piles of sand if only a part of them gets caught in range of the field.</p>
+<p><strong>Rainbow Tile </strong>- (Negative Modificator) - Modificator Rarity: Uncommon<br />a standard shaped tile, with a rainbow chrome effect. the player is unable to identify the color of the sand until its been placed. When placed, the rainbow tile loses its rainbow effect, and the randomly selected color of the sand is unveiled.</p>
+<p><strong>Paintball </strong>- (Negative Modificator) - Modificator Rarity: Rare<br />a gray ball, that pops open on contact, splashing rainbow paint on top of nearby sand, making it harder to distinct its original color. </p>
+<p> </p>
+<p><strong>DIFFICULTY LIST:</strong></p>
+<p><strong>DIF1 - Relax:</strong> this gamemode is meant for a more relaxed and less demanding gameplay.</p>
+<p><strong>KEY CHANGES</strong></p>
+<ul>
+<li>granularity set to 100% - sand forms perfectly symmetric piles</li>
+<li>significantly slowed game speed - tiles fall much slower, and dont speed up</li>
+<li>additional delay before spawning new tiles</li>
+<li>only the positive modificators are enabled</li>
+<li>modificator spawn is fairly frequent. roughly once every 10-15 tiles</li>
+<li>4 classic sand colors</li>
+<li>7 classic tile shapes</li>
+<li>unfiltered random tile selection mode [?]</li>
+<li>unfiltered random color selection mode [?]</li>
+</ul>
+<p> </p>
+<p><strong>DIF2 - Very Easy:</strong> slightly easier than easy :P</p>
+<p><strong>KEY CHANGES</strong></p>
+<ul>
+<li>granularity locked to 70% - we're not using pure sand no more</li>
+<li>slow game speed, but it speeds up over time. not by much, but it does</li>
+<li>only the positive modificators are enabled</li>
+<li>modificator spawn is fairly frequent. roughly once every 15 tiles</li>
+<li>4 classic sand colors</li>
+<li>7 classic tile shapes</li>
+<li>unfiltered random tile selection mode [?]</li>
+<li>unfiltered random color selection mode [?]</li>
+</ul>
+<p> </p>
+<p><strong>DIF3 - Easy</strong></p>
+<p><strong>KEY CHANGES</strong></p>
+<ul>
+<li>granularity locked to 50%</li>
+<li>slightly faster than DIF2, and it also speeds up faster</li>
+<li>positive and neutral modificators are enabled</li>
+<li>modificator spawn is moderate. roughly once every 15 tiles</li>
+<li>4 classic sand colors</li>
+<li>7 classic tile shapes</li>
+<li>unfiltered random tile selection mode [?]</li>
+<li>unfiltered random color selection mode [?]</li>
+</ul>
+<p> </p>
+<p><strong>DIF4 - Medium:</strong> the standard experience.</p>
+<p><strong>KEY CHANGES</strong></p>
+<ul>
+<li>granularity locked to 50%</li>
+<li>standard game speed. standard speed up</li>
+<li>modificators include: lava block, bomb, colorshifter and rainbow tile</li>
+<li>modificator spawn is moderate. roughly once every 20 tiles</li>
+<li>4 classic sand colors</li>
+<li>7 classic tile shapes</li>
+<li>unfiltered random tile selection mode [?]</li>
+<li>unfiltered random color selection mode [?]</li>
+</ul>
+<p> </p>
+<p><strong>DIF5 - Hard:</strong> slightly more difficult.</p>
+<p><strong>KEY CHANGES</strong></p>
+<ul>
+<li>granularity locked to 50%</li>
+<li>gamespeed is higher and it speeds up slightly more</li>
+<li>all modificators are included</li>
+<li>modificator spawn is moderate. roughly once every 20 tiles</li>
+<li>4 classic sand colors</li>
+<li>7 classic tile shapes</li>
+<li>unfiltered random tile selection mode [?]</li>
+<li>[OPTIONAL] filtered random color selection - up to 3 same-color tiles in a row</li>
+</ul>
+<p> </p>
+<p><strong>DIF6 - Very Hard:</strong> significantly more difficult. you'd need to lock in for this one.</p>
+<p><strong>KEY CHANGES</strong></p>
+<ul>
+<li>granularity locked to 50%</li>
+<li>gamespeed is higher and it speeds up slightly more</li>
+<li>random X spawn position for new tiles</li>
+<li>all modificators are included</li>
+<li>modificator spawn is moderate. roughly once every 20 tiles</li>
+<li>modificator rarity rules are ignored. every one has the same chance of appearing</li>
+<li>4 classic sand colors</li>
+<li>7 classic tile shapes + 4 extra large tile shapes</li>
+<li>unfiltered random tile selection mode [?]</li>
+<li>[OPTIONAL] filtered random color selection - up to 3 same-color tiles in a row</li>
+</ul>
+<p> </p>
+<p><strong>DIF7 - Insanely Hard:</strong> this is the point the game becomes close to barely playable</p>
+<p><strong>KEY CHANGES</strong></p>
+<ul>
+<li>granularity locked to 40%</li>
+<li>gamespeed is higher and it speeds up significantly</li>
+<li>random X spawn position for new tiles</li>
+<li>only neutral and negative modificators are enabled</li>
+<li>modificator spawn is moderate. roughly once every 15 tiles</li>
+<li>modificator rarity rules are ignored. every one has the same chance of appearing</li>
+<li>4 classic sand colors</li>
+<li>7 classic tile shapes + 4 extra large tile shapes</li>
+<li>unfiltered random tile selection mode [?]</li>
+<li>[OPTIONAL] filtered random color selection - up to 3 same-color tiles in a row</li>
+</ul>

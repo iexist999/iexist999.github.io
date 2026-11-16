@@ -284,7 +284,7 @@ function addScribbleBox(el) {
   el.prepend(box);
 }
 
-document.querySelectorAll(".mode-list li, .info-box").forEach(addScribbleBox);
+document.querySelectorAll(".mode-list > li, .info-box").forEach(addScribbleBox);
 
 // ---------- Gamemode layout ----------
 const modeList = document.querySelector(".mode-list");
@@ -312,6 +312,7 @@ function layoutModeBoxes() {
     let top = 0;
     if (i > 0) top = tops[i - 1] + heights[i - 1] / 2;                // middle of the previous box
     if (i > 1) top = Math.max(top, bottoms[i - 2] + STAGGER_GAP);     // never overlap the box on the same side
+    if (li.classList.contains("mode-all")) top = Math.max(top, Math.max(...bottoms) - h);   // the small "full list" box sits at the bottom right
     tops.push(top);
     heights.push(h);
     bottoms.push(top + h);
@@ -324,7 +325,7 @@ if (modeList) {
   // re-runs when the panel becomes visible, the window resizes, or text reflows
   const ro = new ResizeObserver(layoutModeBoxes);
   ro.observe(modeList);
-  modeList.querySelectorAll("li").forEach(li => ro.observe(li));
+  [...modeList.children].forEach(li => ro.observe(li));
   if (document.fonts) document.fonts.ready.then(layoutModeBoxes);
   layoutModeBoxes();
 }
@@ -388,9 +389,129 @@ const MORE_TEXT_MAX_MS = 450;   // the long text's letters all start fading with
 const MORE_DIM_MS = 800;       // how slowly the other boxes dim (and come back)
 const MORE_DIM = 0.1;          // how visible the other boxes stay while one is opened (0.1 = 10%)
 const MORE_SCROLL_MS = 3200;   // the slow scroll that puts the opened box in the middle of the screen
+const MORE_BODY_MAX = 380;     // the scrolling part of an opened box is never taller than this many px...
+const MORE_BODY_VH = 0.45;     // ...or this share of the window height (whichever is smaller)
 const MORE_WIDTH = 0.86;        // opened box width as a share of the list width (phones use all of it)
 const MORE_MAX_W = 640;         // ...but never wider than this many px
 
+// ---------- Full list of gamemodes: discord-style tabs inside the opened "full list" box ----------
+const MODE_ICON_DIR = "images/icons/";  // a gamemode's icon = this folder + gm_ + its name in lowercase + .png (classicSand -> images/icons/gm_classicsand.png). no file = a colored square in the tab list, nothing on the home page
+const ALL_WIDTH = 1;                    // opened "full list" box width as a share of the list width (normal boxes: MORE_WIDTH)
+const ALL_MAX_W = 780;                  // ...but never wider than this many px (normal boxes: MORE_MAX_W)
+const ALL_LAYOUT_MAX = 520;             // height of the tabs + contents area in px (normal boxes: MORE_BODY_MAX)
+const ALL_LAYOUT_VH = 0.62;             // ...or this share of the window height (whichever is smaller)
+
+function modeIconUrl(name) {
+  return MODE_ICON_DIR + "gm_" + name.toLowerCase().replace(/\s+/g, "") + ".png";
+}
+
+// small icon in front of the name of every gamemode box on the home page
+function addModeIcons() {
+  if (!MODE_ICON_DIR) return;
+  const panel = modeList.closest(".panel");
+  [...modeList.children].forEach(li => {
+    const nameEl = li.querySelector(":scope > strong");
+    if (!nameEl) return;
+    const img = new Image();
+    img.className = "mode-icon char";            // "char": it fades in together with the letters of the tab
+    img.alt = "";
+    img.addEventListener("error", () => img.remove());
+    img.src = modeIconUrl(nameEl.textContent.trim());
+    nameEl.before(img);
+    const chars = panel && panel._chars;
+    const pos = chars ? chars.indexOf(nameEl.querySelector(".char")) : -1;
+    if (pos >= 0) chars.splice(pos, 0, img);
+  });
+}
+
+// builds one tab per gamemode of the list above. name, tags and text are copied from each box, so they are only written once
+function buildAllModes() {
+  const allLi = modeList.querySelector(".mode-all");
+  if (!allLi) return;
+  const more = allLi.querySelector(".mode-more");
+  const tabsEl = allLi.querySelector(".all-tabs");
+  const panesEl = allLi.querySelector(".all-panes");
+  const entries = [];
+  let selected = 0;
+
+  [...modeList.children].filter(li => li !== allLi).forEach(li => {
+    const nameEl = li.querySelector(":scope > strong");
+    const src = li.querySelector(".mode-more");
+    if (!nameEl || !src) return;
+    const name = nameEl.textContent.trim();
+    const color = getComputedStyle(nameEl).color;
+    const idx = entries.length;
+
+    // the tab button: icon + name
+    const tab = document.createElement("button");
+    tab.type = "button";
+    tab.className = "all-tab";
+    tab.setAttribute("role", "tab");
+    tab.style.setProperty("--c", color);
+    const icon = document.createElement("span");
+    icon.className = "all-icon";
+    if (MODE_ICON_DIR) {
+      const img = new Image();
+      img.alt = "";
+      img.addEventListener("load", () => icon.classList.add("has-img"));
+      img.addEventListener("error", () => img.remove());
+      img.src = modeIconUrl(name);
+      icon.append(img);
+    }
+    const label = document.createElement("span");
+    label.className = "all-tab-name";
+    label.textContent = name;
+    splitText(label);
+    tab.append(icon, label);
+    tab.addEventListener("click", () => { if (selected !== idx) choose(idx); });
+    tabsEl.append(tab);
+
+    // the contents: name + tags stay put at the top, the text below them scrolls
+    const panel = document.createElement("div");
+    panel.className = "all-panel";
+    panel.setAttribute("role", "tabpanel");
+    panel.hidden = true;
+    const head = document.createElement("div");
+    head.className = "all-head";
+    const title = nameEl.cloneNode(true);
+    title.style.color = color;
+    head.append(title);
+    const tags = src.querySelector(".mode-tags");
+    if (tags) head.append(tags.cloneNode(true));
+    panel.append(head);
+    const body = src.querySelector(".mode-body");
+    if (body) panel.append(body.cloneNode(true));
+    panesEl.append(panel);
+
+    entries.push({ tab, panel });
+  });
+  if (!entries.length) return;
+
+  function choose(i, animate = true) {
+    selected = i;
+    entries.forEach((e, n) => {
+      e.tab.setAttribute("aria-selected", n === i);
+      e.tab.tabIndex = n === i ? 0 : -1;
+      e.panel.hidden = n !== i;
+    });
+    const body = entries[i].panel.querySelector(".mode-body");
+    if (body) body.scrollTop = 0;
+    if (animate) playMoreText(more, entries[i].panel);   // same letter-by-letter fade, only for the new tab
+  }
+
+  tabsEl.addEventListener("keydown", e => {            // arrow keys move between the tabs
+    const dir = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key];
+    if (!dir) return;
+    e.preventDefault();
+    const next = (selected + dir + entries.length) % entries.length;
+    entries[next].tab.focus();
+    choose(next);
+  });
+
+  choose(0, false);
+}
+
+const MORE_TEXT_START_MS = MORE_MOVE_MS + 40;   // when the long text starts to appear (from the click). keep it a bit above MORE_MOVE_MS, or the scrollbar shows up outside the still-growing box
 const wait = ms => new Promise(r => setTimeout(r, reduceMotion.matches ? 0 : ms));
 
 // slow, ultra-smooth scroll. It shares scrollFrame with the tab scroll above, so wheel / touch / keys already cancel it
@@ -426,9 +547,15 @@ function scrollToOpen(top, height) {
 }
 
 // same letter-by-letter fade as the tabs; returns how long it takes
-function playMoreText(more) {
-  const chars = more._chars;
-  const tags = [...more.querySelectorAll(".mode-tag")];
+// how far down the visible scroll area reaches (tabs of the "full list" box hide the other scroll areas)
+function scrollReach(scope) {
+  const s = [...scope.querySelectorAll(".mode-body")].find(b => !b.closest("[hidden]"));
+  return s.getBoundingClientRect().top + s.clientHeight + 30;
+}
+
+function playMoreText(more, scope = more) {
+  const chars = more._chars.filter(c => (scope === more || scope.contains(c)) && !c.closest("[hidden]"));
+  const tags = [...scope.querySelectorAll(".mode-tag")].filter(t => !t.closest("[hidden]"));
   tags.forEach(t => t.getAnimations().forEach(a => a.cancel()));
   chars.forEach(c => c.getAnimations().forEach(a => a.cancel()));
 
@@ -440,14 +567,23 @@ function playMoreText(more) {
   tags.forEach((t, i) => {                         // the little gray boxes fade in one after another
     t.animate([{ opacity: 0 }, { opacity: 1 }], { duration: TEXT_FADE_MS, delay: i * 60, easing: "ease-out", fill: "both" });
   });
-  const step = Math.min(TEXT_LETTER_MS, MORE_TEXT_MAX_MS / Math.max(chars.length, 1));
-  chars.forEach((c, i) => {
+  // letters below the visible part of the scroll area just appear (animating thousands of hidden letters would lag)
+  const scroller = more.querySelector(".mode-body");
+  const reach = scrollReach(scope);
+  const tops = chars.map(c => c.getBoundingClientRect().top);
+  const live = chars.filter((c, i) => {
+    if (tops[i] <= reach) return true;
+    c.style.opacity = 1;
+    return false;
+  });
+  const step = Math.min(TEXT_LETTER_MS, MORE_TEXT_MAX_MS / Math.max(live.length, 1));
+  live.forEach((c, i) => {
     c.animate(
       [{ opacity: 0 }, { opacity: 1 }],
       { duration: TEXT_FADE_MS, delay: i * step, easing: "ease-out", fill: "both" }
     );
   });
-  return chars.length * step + TEXT_FADE_MS;
+  return live.length * step + TEXT_FADE_MS;
 }
 
 async function openMode(li) {
@@ -476,8 +612,13 @@ async function openMode(li) {
 
   // measure the box with the long text in it (and lock the text's width, so it never re-wraps while the box grows)
   const more = li.querySelector(".mode-more");
+  const scroller = more.querySelector(".mode-body");      // the part that scrolls (the name and the tags stay put)
+  const isAll = li.classList.contains("mode-all");   // the "full list" box: wider and taller, with tabs inside
+  if (isAll) more.querySelector(".all-layout").style.height = Math.min(ALL_LAYOUT_MAX, Math.round(window.innerHeight * ALL_LAYOUT_VH)) + "px";
+  else scroller.style.maxHeight = Math.min(MORE_BODY_MAX, Math.round(window.innerHeight * MORE_BODY_VH)) + "px";
   const narrow = !window.matchMedia("(min-width: 601px)").matches;
-  const w = Math.min(listW, MORE_MAX_W, Math.round(listW * (narrow ? 1 : MORE_WIDTH)));
+  const w = isAll ? Math.min(listW, ALL_MAX_W, Math.round(listW * (narrow ? 1 : ALL_WIDTH)))
+                  : Math.min(listW, MORE_MAX_W, Math.round(listW * (narrow ? 1 : MORE_WIDTH)));
   li.classList.add("show-more");
   li.style.width = w + "px";
   li.style.height = "auto";
@@ -496,20 +637,21 @@ async function openMode(li) {
   Object.assign(li.style, { top: top + "px", left: (listW - w) / 2 + "px", width: w + "px", height: h + "px" });
   scrollToOpen(top, h);
 
-  // as soon as the short text is gone, the long text writes itself in while the box is still settling
-  if (!await alive(MORE_FADE_MS)) return;
+  // once the box has finished growing, the long text writes itself in
+  if (!await alive(MORE_TEXT_START_MS)) return;
   li.classList.add("show-more", "more-in");
   openLi = li;
   const textMs = playMoreText(more);
-  if (!await alive(Math.max(MORE_MOVE_MS - MORE_FADE_MS, textMs))) return;
+  if (!await alive(Math.max(MORE_MOVE_MS - MORE_TEXT_START_MS, textMs))) return;
   modeBusy = false;
-  li.querySelector(".mode-back").focus({ preventScroll: true });
+  li.querySelector(".mode-close").focus({ preventScroll: true });
 }
 
 async function closeMode() {
   const li = openLi;
   if (!li || modeBusy) return;
   cancelAnimationFrame(scrollFrame);              // stop a slow scroll that is still gliding
+  hideTip();
   modeBusy = true;
   const run = ++modeRun;
   const alive = async ms => { await wait(ms); return run === modeRun; };
@@ -521,6 +663,7 @@ async function closeMode() {
   li.classList.remove("show-more");
   void li.offsetWidth;                             // flush, so the short text can fade (not pop) in
   li.classList.remove("text-out");
+  li.classList.add("closing");                     // lets the small "full list" box thin its border back out
   modeList.querySelectorAll("li.faded").forEach(el => el.classList.remove("faded"));
   const home = li._home;
   Object.assign(li.style, { top: home.top + "px", left: home.left + "px", width: home.width + "px", height: home.height + "px" });
@@ -537,12 +680,13 @@ function resetModes() {
   cancelAnimationFrame(scrollFrame);
   const keepY = window.scrollY;
   modeList.classList.remove("has-open");
-  modeList.querySelectorAll("li").forEach(el => {
+  [...modeList.children].forEach(el => {
     el.removeAttribute("style");
-    el.classList.remove("is-open", "faded", "text-out", "show-more", "more-in");
+    el.classList.remove("is-open", "faded", "text-out", "show-more", "more-in", "closing");
     const more = el.querySelector(".mode-more");
     if (more) {
       more.style.width = "";
+      more.querySelectorAll(".mode-body").forEach(sc => { if (sc._wheelStop) sc._wheelStop(); sc.scrollTop = 0; sc.style.maxHeight = ""; });
       more.querySelectorAll(".mode-tag").forEach(t => t.getAnimations().forEach(a => a.cancel()));
       (more._chars || []).forEach(c => { c.getAnimations().forEach(a => a.cancel()); c.style.opacity = ""; });
     }
@@ -554,27 +698,94 @@ function resetModes() {
 }
 
 if (modeList) {
+  addModeIcons();
+  buildAllModes();
   modeList.style.setProperty("--move-ms", MORE_MOVE_MS + "ms");
   modeList.style.setProperty("--more-fade-ms", MORE_FADE_MS + "ms");
   modeList.style.setProperty("--more-dim-ms", MORE_DIM_MS + "ms");
   modeList.style.setProperty("--more-dim", MORE_DIM);
-  modeList.querySelectorAll("li").forEach(li => {
+  [...modeList.children].forEach(li => {
     const more = li.querySelector(".mode-more");
     const readMore = li.querySelector(".read-more");
     if (!more || !readMore) return;
 
-    const back = document.createElement("button");
-    back.type = "button";
-    back.className = "mode-back";
-    back.textContent = "<<back";
-    back.addEventListener("click", closeMode);
-    more.append(back);
+    const close = document.createElement("button");   // takes the place of "read more>>" while the box is opened
+    close.type = "button";
+    close.className = "mode-close";
+    close.textContent = "close";
+    close.addEventListener("click", closeMode);
+    readMore.after(close);
 
-    splitText(back);                               // so "<<back" writes itself in with the rest
-    more._chars = [...more.querySelectorAll(".char")];
+    // the letters of "close" write themselves in first, then the rest of the text
+    more._chars = [...splitText(close), ...more.querySelectorAll(".char")];
 
     readMore.addEventListener("click", () => openMode(li));
   });
   document.addEventListener("keydown", e => { if (e.key === "Escape") closeMode(); });
   document.addEventListener("visibilitychange", () => { if (document.hidden) resetModes(); });   // switched browser tab: it is closed when you come back
 }
+
+
+// ---------- [?] tooltips ----------
+// one shared gray box, fixed to the screen (so the scrolling box can't clip it). the text of every
+// [?] is its own data-tip="..." attribute in index.html
+const hintTip = document.createElement("div");
+hintTip.className = "hint-tip";
+hintTip.setAttribute("role", "tooltip");
+document.body.append(hintTip);
+
+function showTip(hint) {
+  hintTip.textContent = hint.dataset.tip || "";
+  const r = hint.getBoundingClientRect();
+  const w = hintTip.offsetWidth, h = hintTip.offsetHeight;
+  const left = Math.max(8, Math.min(r.right - w, window.innerWidth - w - 8));   // right edges line up
+  let top = r.top - h - 8;                                                      // above the [?]
+  if (top < 8) top = r.bottom + 8;                                              // no room above: go below
+  hintTip.style.left = left + "px";
+  hintTip.style.top = top + "px";
+  hintTip.classList.add("on");
+}
+
+function hideTip() { hintTip.classList.remove("on"); }
+
+document.querySelectorAll(".hint").forEach(hint => {
+  hint.addEventListener("mouseenter", () => showTip(hint));
+  hint.addEventListener("mouseleave", hideTip);
+  hint.addEventListener("focus", () => showTip(hint));
+  hint.addEventListener("blur", hideTip);
+});
+window.addEventListener("scroll", hideTip, { capture: true, passive: true });   // also fires for the scrolling box
+
+
+// ---------- Gentler wheel scrolling inside the opened box ----------
+const WHEEL_FACTOR = 0.35;      // one mouse wheel step moves the text this much of the normal distance
+const WHEEL_BIG_STEP = 50;      // only wheel events bigger than this are scaled down (trackpads send small ones)
+
+document.querySelectorAll(".mode-body").forEach(box => {
+  let target = 0;
+  let frame = null;
+
+  function glide() {                                // ease towards the target position
+    const before = box.scrollTop;
+    const diff = target - before;
+    box.scrollTop = before + (Math.abs(diff) > 4 ? diff * 0.22 : diff);
+    frame = box.scrollTop !== before && Math.abs(target - box.scrollTop) > 0.5 ? requestAnimationFrame(glide) : null;
+  }
+
+  box._wheelStop = () => { cancelAnimationFrame(frame); frame = null; };
+
+  box.addEventListener("wheel", e => {
+    const max = box.scrollHeight - box.clientHeight;
+    if (max <= 0 || e.ctrlKey) return;              // nothing to scroll (or pinch zoom): leave it alone
+    e.preventDefault();
+
+    let dy = e.deltaY;
+    if (e.deltaMode === 1) dy *= 33;                // lines -> px (one wheel step is about 100px)
+    else if (e.deltaMode === 2) dy *= box.clientHeight;
+    if (Math.abs(dy) >= WHEEL_BIG_STEP) dy *= WHEEL_FACTOR;
+
+    if (frame === null) target = box.scrollTop;
+    target = Math.max(0, Math.min(max, target + dy));
+    if (frame === null) frame = requestAnimationFrame(glide);
+  }, { passive: false });
+});
