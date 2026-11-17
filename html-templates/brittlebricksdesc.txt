@@ -1,0 +1,41 @@
+<p>tiles fall one at a time but unlike most other gamemodes, they do NOT crumble into sand upon landing.</p>
+<p>every tile is made out of cracked brick, which is technically a solid material, but it is so incredibly brittle and fragile, it fragments on any impact or sometimes even slight collision. the damage of course depends on the impact velocity and the total surface area of the collision points.</p>
+<p>at lower speeds, only about 5-15% of the tile can fracture (maybe 20% at most), while higher speeds can almost fully destroy a tile. examples of higher impact speeds include <span style="text-decoration: underline;">fast forwarding a tile</span>. yes, you heard it right. you can make this mode look almost identically to the classic if you just never take your finger off the "speed up" tile key :P</p>
+<p>apart from blunt impacts, your bricky tiles can also experience friction. if you forcibly try to move a falling tile into a wall (and obviously, its being stopped by the wall), you create <span style="text-decoration: underline;">friction</span>. it can cause your brick to slightly pulverize and dust, making some of it detach before the tile lands.</p>
+<p>as the game progresses, the tiles fall faster and faster, so you have less time to strategize your next move.</p>
+<p>your goal, is to make a connection between both of the horiztonal map borders using same-color brick (or at least whats left of it). if you successfully do so, every pixel, that made the connection will be removed. you need to prevent sand from reaching the top of the map, in which case, if there is no more space for new tiles to spawn, the game is over.</p>
+<p><strong>DIFFICULTY LIST:</strong></p>
+<p><strong>DIF1 - Relax:</strong> this gamemode is meant for a more relaxed and less demanding gameplay.</p>
+<p><strong>KEY CHANGES</strong></p>
+<ul>
+<li>slow game speed, and minimal speedup</li>
+<li>overall brick collision and friction damage is mutliplied. not by much - you can just grind off a whole tile against a wall, but its noticeable</li>
+<li>4 classic sand colors</li>
+<li>7 classic tile shapes</li>
+<li>unfiltered random tile selection mode [?]</li>
+<li>unfiltered random color selection mode [?]</li>
+</ul>
+<p> </p>
+<p><strong>DIF2 - Medium:</strong> the standard experience.</p>
+<p><strong>KEY CHANGES</strong></p>
+<ul>
+<li>standard game speed, with normal speedup factor</li>
+<li>brick collision and friction damage is unmodified.</li>
+<li>4 classic sand colors</li>
+<li>7 classic tile shapes</li>
+<li>unfiltered random tile selection mode [?]</li>
+<li>unfiltered random color selection mode [?]</li>
+</ul>
+<p> </p>
+<p><strong>DIF3 - Hard: </strong>slightly harder than DIF2</p>
+<p><strong>KEY CHANGES</strong></p>
+<ul>
+<li>slightly faster game pace, with higher speedup</li>
+<li>brick collision and friction damage is mildly reduced</li>
+<li>4 classic sand colors</li>
+<li>7 classic tile shapes</li>
+<li>unfiltered random tile selection mode [?]</li>
+<li>unfiltered random color selection mode [?]</li>
+</ul>
+<p> </p>
+<p> </p>
