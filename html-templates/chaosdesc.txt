@@ -1,0 +1,70 @@
+<p>tiles fall one at a time and crumble into sand the moment they land. the sand piles up and disperses naturally. its behavior is dictated by the selected difficulty level.</p>
+<p>this gamemode features special (sometimes fun, sometimes not :P) events that trigger in random timespans thoughout the game. at lower difficulties, the events may be only slightly troublesome, and last a lot shorter, while on higher difficulties, the mentioned events get more disruptive on top of lasting more time.</p>
+<p>as the game progresses, the tiles fall faster and faster, so you have less time to strategize your next move. however, this gamemode focuses less on linear speedup difficulty and more on the random events part of this experience.</p>
+<p>your goal, is to make a connection between both of the horiztonal map borders using same-color sand. if you successfully do so, every sand pixel, that made the connection will be removed. you need to prevent sand from reaching the top of the map, in which case, if there is no more space for new tiles to spawn, the game is over.</p>
+<p><strong>LIST OF RANDOM EVENTS:</strong></p>
+<p><strong>Leafblowers</strong> - (Negative Event) - Disruption Level: Low<br />a random rectangular part of the map is outlined as the leafblower area. inside that area, a constant stream or airflow is pumped in a random non-fixed direction. this event can randomly generate either one big area, or a couple of smaller ones. each area has an arrow icon in the middle, pointing in the direction that the airflow is being blowed.</p>
+<p><strong>Flood</strong> - (Negative Event) - Disruption Level: Mild<br />floods cause water to slowly fill the empty parts of the map. newly spawned tiles fall and move slower when going through water. upon placement, sand and other granular materials generaly disperse slower and take longer to settle down. fluid flow is generally not a concern with this event unless youre playing on higher difficulties which allow multiple events to trigger simultaneously.</p>
+<p><strong>Solar Eclipse</strong> - (Negative Event) - Disruption Level: Low<br />the whole map turns pitch black, and the only light sources illuminating the game are random fireflies flying on and about.</p>
+<p><strong>DIFFICULTY LIST:</strong></p>
+<p><strong>DIF1 - Relax:</strong> this gamemode is meant for a more relaxed and less demanding gameplay.</p>
+<p><strong>KEY CHANGES</strong></p>
+<ul>
+<li>slow game pace. it lets you play around and have fun with the different events that happen</li>
+<li>additional delay before spawning new tiles</li>
+<li>all random events are enabled. have fun!</li>
+<li>infrequent event triggers. roughly one every 40-50 seconds</li>
+<li>short event lifetimes. random event generally last shorter than usual. roughly 5-20 seconds</li>
+<li>disruption based lifetime - events last longer or shorter depending on their level</li>
+<li>only one event can be active at any given time</li>
+<li>4 classic sand colors</li>
+<li>7 classic tile shapes</li>
+<li>unfiltered random tile selection mode [?]</li>
+<li>unfiltered random color selection mode [?]</li>
+</ul>
+<p> </p>
+<p><strong>DIF2 - Easy:</strong> yeah, easy!</p>
+<p><strong>KEY CHANGES</strong></p>
+<ul>
+<li>slower pace</li>
+<li>events included: (all positive events), (all neutral events), flood, solar eclipse</li>
+<li>infrequent event triggers. roughly one every 30-70 seconds</li>
+<li>moderate lifetimes. roughly 10-30 seconds</li>
+<li>all events have an equal lifetime randomization. disruption level doesnt affect it</li>
+<li>only one event can be active at any given time</li>
+<li>4 classic sand colors</li>
+<li>7 classic tile shapes</li>
+<li>unfiltered random tile selection mode [?]</li>
+<li>unfiltered random color selection mode [?]</li>
+</ul>
+<p> </p>
+<p><strong>DIF3 - Medium: </strong>this is also fun!</p>
+<p><strong>KEY CHANGES</strong></p>
+<ul>
+<li>standard game speed</li>
+<li>all events are included</li>
+<li>standard event triggers. roughly one every 20-70 seconds</li>
+<li>moderate lifetimes. roughly 10-30 seconds</li>
+<li>all events have an equal lifetime randomization. disruption level doesnt affect it</li>
+<li>only one event can be active at any given time</li>
+<li>4 classic sand colors</li>
+<li>7 classic tile shapes</li>
+<li>unfiltered random tile selection mode [?]</li>
+<li>unfiltered random color selection mode [?]</li>
+</ul>
+<p> </p>
+<p><strong>DIF4 - Hard:</strong> you will probably regret this decision...</p>
+<p><strong>KEY CHANGES</strong></p>
+<ul>
+<li>moderate game speed</li>
+<li>all events are included, but positive ones have had their trigger rate lowered</li>
+<li>standard-to-frequent event triggers. roughly one every 10-80 seconds</li>
+<li>extremely variable lifetimes. can be 5 seconds. can be 40</li>
+<li>all events have an equal lifetime randomization. disruption level doesnt affect it</li>
+<li>the amount of active simultaneous events at any given time is limited to 2</li>
+<li>4 classic sand colors</li>
+<li>7 classic tile shapes</li>
+<li>unfiltered random tile selection mode [?]</li>
+<li>unfiltered random color selection mode [?]</li>
+</ul>
+<p> </p>

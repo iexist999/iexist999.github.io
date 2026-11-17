@@ -451,17 +451,27 @@ function buildAllModes() {
       title: nameEl.cloneNode(true),
       tags: (extra && extra.querySelector(".mode-tags")) || src.querySelector(".mode-tags"),
       body: (extra && extra.querySelector(".mode-body")) || src.querySelector(".mode-body"),
-      used: extra
+      used: extra, tabColor: extra && extra.dataset.tabColor, upcoming: !!extra && "upcoming" in extra.dataset
     });
   });
   extras.filter(e => !items.some(it => it.used === e)).forEach(e => {
     const title = document.createElement("strong");
     title.textContent = e.dataset.name;
     splitText(title);
-    items.push({ name: e.dataset.name, color: e.dataset.color || "#ffffff", title, tags: e.querySelector(".mode-tags"), body: e.querySelector(".mode-body") });
+    items.push({ name: e.dataset.name, color: e.dataset.color || "#ffffff", title, tags: e.querySelector(".mode-tags"), body: e.querySelector(".mode-body"), tabColor: e.dataset.tabColor, upcoming: "upcoming" in e.dataset });
   });
 
-  items.forEach(({ name, color, title, tags, body }) => {
+  // two groups, each with a plain text label (not a button) above it
+  [["available gamemodes", items.filter(it => !it.upcoming)], ["upcoming gamemodes", items.filter(it => it.upcoming)]].forEach(([heading, list]) => {
+  if (!list.length) return;
+  const headEl = document.createElement("div");
+  headEl.className = "all-label";
+  headEl.setAttribute("role", "presentation");
+  headEl.textContent = heading;
+  splitText(headEl);
+  tabsEl.append(headEl);
+
+  list.forEach(({ name, color, title, tags, body, tabColor }) => {
     const idx = entries.length;
 
     // the tab button: icon + name
@@ -470,6 +480,7 @@ function buildAllModes() {
     tab.className = "all-tab";
     tab.setAttribute("role", "tab");
     tab.style.setProperty("--c", color);
+    tab.style.setProperty("--tab-color", tabColor || "#cfcfcf");               // color of the name (data-tab-color in index.html)
     const icon = document.createElement("span");
     icon.className = "all-icon";
     if (MODE_ICON_DIR) {
@@ -497,12 +508,13 @@ function buildAllModes() {
     head.className = "all-head";
     title.style.color = color;
     head.append(title);
-    if (tags) head.append(tags.cloneNode(true));
+    if (tags) { const t = tags.cloneNode(true); splitText(t); head.append(t); }   // letters fade in like the rest
     panel.append(head);
     if (body) panel.append(body.cloneNode(true));
     panesEl.append(panel);
 
     entries.push({ tab, panel });
+  });
   });
   if (data) data.remove();   // everything is copied, the source block is not needed anymore
   if (!entries.length) return;
