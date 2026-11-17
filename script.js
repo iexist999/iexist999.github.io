@@ -434,12 +434,34 @@ function buildAllModes() {
   const entries = [];
   let selected = 0;
 
+  // what goes in the list: the gamemodes of the list above, plus the entries of <div class="all-data"> in index.html.
+  // an entry named like a gamemode above replaces that gamemode's text in the full list, any other name adds a new gamemode
+  const data = allLi.querySelector(".all-data");
+  const extras = data ? [...data.querySelectorAll(".all-entry")] : [];
+  const items = [];
   [...modeList.children].filter(li => li !== allLi).forEach(li => {
     const nameEl = li.querySelector(":scope > strong");
     const src = li.querySelector(".mode-more");
     if (!nameEl || !src) return;
     const name = nameEl.textContent.trim();
-    const color = getComputedStyle(nameEl).color;
+    const extra = extras.find(e => e.dataset.name === name);
+    items.push({
+      name,
+      color: getComputedStyle(nameEl).color,
+      title: nameEl.cloneNode(true),
+      tags: (extra && extra.querySelector(".mode-tags")) || src.querySelector(".mode-tags"),
+      body: (extra && extra.querySelector(".mode-body")) || src.querySelector(".mode-body"),
+      used: extra
+    });
+  });
+  extras.filter(e => !items.some(it => it.used === e)).forEach(e => {
+    const title = document.createElement("strong");
+    title.textContent = e.dataset.name;
+    splitText(title);
+    items.push({ name: e.dataset.name, color: e.dataset.color || "#ffffff", title, tags: e.querySelector(".mode-tags"), body: e.querySelector(".mode-body") });
+  });
+
+  items.forEach(({ name, color, title, tags, body }) => {
     const idx = entries.length;
 
     // the tab button: icon + name
@@ -473,18 +495,16 @@ function buildAllModes() {
     panel.hidden = true;
     const head = document.createElement("div");
     head.className = "all-head";
-    const title = nameEl.cloneNode(true);
     title.style.color = color;
     head.append(title);
-    const tags = src.querySelector(".mode-tags");
     if (tags) head.append(tags.cloneNode(true));
     panel.append(head);
-    const body = src.querySelector(".mode-body");
     if (body) panel.append(body.cloneNode(true));
     panesEl.append(panel);
 
     entries.push({ tab, panel });
   });
+  if (data) data.remove();   // everything is copied, the source block is not needed anymore
   if (!entries.length) return;
 
   function choose(i, animate = true) {

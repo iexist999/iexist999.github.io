@@ -206,6 +206,264 @@
 				<div class="all-tabs" role="tablist" aria-orientation="vertical"></div>
 				<div class="all-panes"></div>
 			</div>
+			<!-- PAGES OF THE FULL LIST. script.js copies everything in this block into the tabs and then removes it.
+			     an entry named like a gamemode of the list above replaces that gamemode's text in the full list.
+			     an entry with a new name adds a new gamemode at the end of the tab list (data-color = the color of its name,
+			     its icon is images/icons/gm_ + name in lowercase + .png). tags are optional: put a mode-tags span above the mode-body. -->
+			<div class="all-data" hidden>
+				<section class="all-entry" data-name="classicSandPlus">
+					<div class="mode-body">
+					<p><strong>GENERAL DESCRIPTION</strong></p>
+					<p>tiles fall one at a time and crumble into sand the moment they land. the sand piles up and disperses naturally. its behavior is dictated by the selected difficulty level.<br />at lower difficulties, the sand spreads uniformly, forming symmetric pyramid-like structures. at higher ones, sand is replaced by other, less granular materials such as damp dirt or clay.</p>
+					<p>apart from normal sand tiles, this gamemode also features a set of different modificators! those are spawned occasionally, once every 10 to 60 normal tiles. depending on the selected difficulty level, certain modificators may make the gameplay easier or significantly harder!</p>
+					<p>as the game progresses, the tiles fall faster and faster, so you have less time to strategize your next move.</p>
+					<p>your goal, is to make a connection between both of the horiztonal map borders using same-color sand. if you successfully do so, every sand pixel, that made the connection will be removed. you need to prevent sand from reaching the top of the map, in which case, if there is no more space for new tiles to spawn, the game is over.</p>
+					<p><strong>LIST OF MODIFICATORS:</strong></p>
+					<p><strong>Lava Block </strong>- (Positive Modificator) - Modificator Rarity: Common<strong><br /></strong>a standard shaped tile, made entirely out of lava. it vaporizes any material it gets in contact with. depending on the selected difficulty level, one lava pixel may equal up to 10 removed sand pixels.</p>
+					<p><strong>Bomb </strong>- (Positive Modificator) - Modificator Rarity: Fairly Common<strong><br /></strong>a small black colored square, which explodes on contact with matter, removing nearby pixels in its effective range. depending on the selected difficulty level, the range of the explosion may vary slightly.</p>
+					<p><strong>Colorshifter </strong>- (Neutral Modificator) - Modificator Rarity: Uncommon<strong><br /></strong>a small rainbow colored square, which fires a circular field that expands, and modifies the color of the sand within its range. switch rules are applied randomly for each shifter, meaning one can turn the color green to red, while another one may turn the same color to yellow. depending on the selected difficulty level, the range of the field may vary. also, on lower difficulties, the color switch may be applied to entire piles of sand if only a part of them gets caught in range of the field.</p>
+					<p><strong>Rainbow Tile </strong>- (Negative Modificator) - Modificator Rarity: Uncommon<br />a standard shaped tile, with a rainbow chrome effect. the player is unable to identify the color of the sand until its been placed. When placed, the rainbow tile loses its rainbow effect, and the randomly selected color of the sand is unveiled.</p>
+					<p><strong>Paintball </strong>- (Negative Modificator) - Modificator Rarity: Rare<br />a gray ball, that pops open on contact, splashing rainbow paint on top of nearby sand, making it harder to distinct its original color. </p>
+					<p> </p>
+					<p><strong>DIFFICULTY LIST:</strong></p>
+					<p><span class="dif-tag">DIF1</span> <strong>- Relax:</strong> this gamemode is meant for a more relaxed and less demanding gameplay.</p>
+					<p><strong>KEY CHANGES</strong></p>
+					<ul>
+					<li>granularity set to 100% - sand forms perfectly symmetric piles</li>
+					<li>significantly slowed game speed - tiles fall much slower, and dont speed up</li>
+					<li>additional delay before spawning new tiles</li>
+					<li>only the positive modificators are enabled</li>
+					<li>modificator spawn is fairly frequent. roughly once every 10-15 tiles</li>
+					<li>4 classic sand colors</li>
+					<li>7 classic tile shapes</li>
+					<li>unfiltered random tile selection mode <span class="hint" tabindex="0" data-tip="tiles are picked completely at random, so the same shape can show up several times in a row.">[?]</span></li>
+					<li>unfiltered random color selection mode <span class="hint" tabindex="0" data-tip="colors are picked completely at random, so the same color can show up several times in a row.">[?]</span></li>
+					</ul>
+					<p> </p>
+					<p><span class="dif-tag">DIF2</span> <strong>- Very Easy:</strong> slightly easier than easy :P</p>
+					<p><strong>KEY CHANGES</strong></p>
+					<ul>
+					<li>granularity locked to 70% - we're not using pure sand no more</li>
+					<li>slow game speed, but it speeds up over time. not by much, but it does</li>
+					<li>only the positive modificators are enabled</li>
+					<li>modificator spawn is fairly frequent. roughly once every 15 tiles</li>
+					<li>4 classic sand colors</li>
+					<li>7 classic tile shapes</li>
+					<li>unfiltered random tile selection mode <span class="hint" tabindex="0" data-tip="tiles are picked completely at random, so the same shape can show up several times in a row.">[?]</span></li>
+					<li>unfiltered random color selection mode <span class="hint" tabindex="0" data-tip="colors are picked completely at random, so the same color can show up several times in a row.">[?]</span></li>
+					</ul>
+					<p> </p>
+					<p><span class="dif-tag">DIF3</span> <strong>- Easy</strong></p>
+					<p><strong>KEY CHANGES</strong></p>
+					<ul>
+					<li>granularity locked to 50%</li>
+					<li>slightly faster than DIF2, and it also speeds up faster</li>
+					<li>positive and neutral modificators are enabled</li>
+					<li>modificator spawn is moderate. roughly once every 15 tiles</li>
+					<li>4 classic sand colors</li>
+					<li>7 classic tile shapes</li>
+					<li>unfiltered random tile selection mode <span class="hint" tabindex="0" data-tip="tiles are picked completely at random, so the same shape can show up several times in a row.">[?]</span></li>
+					<li>unfiltered random color selection mode <span class="hint" tabindex="0" data-tip="colors are picked completely at random, so the same color can show up several times in a row.">[?]</span></li>
+					</ul>
+					<p> </p>
+					<p><span class="dif-tag">DIF4</span> <strong>- Medium:</strong> the standard experience.</p>
+					<p><strong>KEY CHANGES</strong></p>
+					<ul>
+					<li>granularity locked to 50%</li>
+					<li>standard game speed. standard speed up</li>
+					<li>modificators include: lava block, bomb, colorshifter and rainbow tile</li>
+					<li>modificator spawn is moderate. roughly once every 20 tiles</li>
+					<li>4 classic sand colors</li>
+					<li>7 classic tile shapes</li>
+					<li>unfiltered random tile selection mode <span class="hint" tabindex="0" data-tip="tiles are picked completely at random, so the same shape can show up several times in a row.">[?]</span></li>
+					<li>unfiltered random color selection mode <span class="hint" tabindex="0" data-tip="colors are picked completely at random, so the same color can show up several times in a row.">[?]</span></li>
+					</ul>
+					<p> </p>
+					<p><span class="dif-tag">DIF5</span> <strong>- Hard:</strong> slightly more difficult.</p>
+					<p><strong>KEY CHANGES</strong></p>
+					<ul>
+					<li>granularity locked to 50%</li>
+					<li>gamespeed is higher and it speeds up slightly more</li>
+					<li>all modificators are included</li>
+					<li>modificator spawn is moderate. roughly once every 20 tiles</li>
+					<li>4 classic sand colors</li>
+					<li>7 classic tile shapes</li>
+					<li>unfiltered random tile selection mode <span class="hint" tabindex="0" data-tip="tiles are picked completely at random, so the same shape can show up several times in a row.">[?]</span></li>
+					<li class="optional">[OPTIONAL] filtered random color selection - up to 3 same-color tiles in a row</li>
+					</ul>
+					<p> </p>
+					<p><span class="dif-tag">DIF6</span> <strong>- Very Hard:</strong> significantly more difficult. you'd need to lock in for this one.</p>
+					<p><strong>KEY CHANGES</strong></p>
+					<ul>
+					<li>granularity locked to 50%</li>
+					<li>gamespeed is higher and it speeds up slightly more</li>
+					<li>random X spawn position for new tiles</li>
+					<li>all modificators are included</li>
+					<li>modificator spawn is moderate. roughly once every 20 tiles</li>
+					<li>modificator rarity rules are ignored. every one has the same chance of appearing</li>
+					<li>4 classic sand colors</li>
+					<li>7 classic tile shapes + 4 extra large tile shapes</li>
+					<li>unfiltered random tile selection mode <span class="hint" tabindex="0" data-tip="tiles are picked completely at random, so the same shape can show up several times in a row.">[?]</span></li>
+					<li class="optional">[OPTIONAL] filtered random color selection - up to 3 same-color tiles in a row</li>
+					</ul>
+					<p> </p>
+					<p><span class="dif-tag">DIF7</span> <strong>- Insanely Hard:</strong> this is the point the game becomes close to barely playable</p>
+					<p><strong>KEY CHANGES</strong></p>
+					<ul>
+					<li>granularity locked to 40%</li>
+					<li>gamespeed is higher and it speeds up significantly</li>
+					<li>random X spawn position for new tiles</li>
+					<li>only neutral and negative modificators are enabled</li>
+					<li>modificator spawn is moderate. roughly once every 15 tiles</li>
+					<li>modificator rarity rules are ignored. every one has the same chance of appearing</li>
+					<li>4 classic sand colors</li>
+					<li>7 classic tile shapes + 4 extra large tile shapes</li>
+					<li>unfiltered random tile selection mode <span class="hint" tabindex="0" data-tip="tiles are picked completely at random, so the same shape can show up several times in a row.">[?]</span></li>
+					<li class="optional">[OPTIONAL] filtered random color selection - up to 3 same-color tiles in a row</li>
+					</ul>
+					</div>
+				</section>
+				<section class="all-entry" data-name="elementSoup">
+					<div class="mode-body">
+					<p><strong>GENERAL DESCRIPTION</strong></p>
+					<p>tiles fall one at a time and crumble into different materials the moment they land. each color is assigned a random material at start, and its locked to that material for the rest of the game<br />at higher difficulties, the pool of potential materials include more tricker behaving ones, like gel, or solids.</p>
+					<p>as the game progresses, the tiles fall faster and faster, so you have less time to strategize your next move.</p>
+					<p>your goal, is to make a connection between both of the horiztonal map borders using same-color materials. if you successfully do so, every pixel, that made the connection will be removed. you need to prevent pixels from reaching the top of the map, in which case, if there is no more space for new tiles to spawn, the game is over.</p>
+					<p><strong>LIST OF POTENTIAL MATERIALS/ELEMENTS:</strong></p>
+					<p><strong>Smooth Sand</strong> - Material Type: Powder - Behavior Trickiness: Very Easy<strong><br /></strong>smooth sand is perfectly granular and forms uniform piles.</p>
+					<p><strong>Gravel</strong> - Material Type: Powder - Behavior Trickiness: Easy<br />gravel is another granular material, but unlike some others, it doesnt disperse perfectly, and may form irregular piles. this is still a fairly granular material compared to others though</p>
+					<p><strong>Sand</strong> - Material Type: Powder - Behavior Trickiness: Easy<br />sand, similarly to gravel, doesnt produce uniform piles. unlike gravel, sand can absorb water, making it heavier and more cohesive</p>
+					<p><strong>Damp Dirt</strong> - Material Type: Powder - Behavior Trickiness: Easy<br />damp dirt is much more cohesive than sand or gravel. it forms much steeper and irregular piles.</p>
+					<p><strong>Coal</strong> - Material Type: Powder - Behavior Trickiness: Difficult<br />coal forms extremely steep piles, and doesnt disperse well to the sides. piles of this material are usually more tall than they are wide.</p>
+					<p><strong>Sawdust</strong> - Material Type: Powder - Behavior Trickiness: Easy<br />this material is much lighter than most other powders. heavier materials falling at high speeds may burrow under several layers of a sawdust pile. unlike most others, this material floats on water.</p>
+					<p><strong>Flour</strong> - Material Type: Ash - Behavior Trickiness: Mixed<br />flour is very light and may be easily influenced by airflow. heavier materials falling at high speeds may burrow under several layers of a flour pile. this material also floats on top of water.</p>
+					<p><strong>Water</strong> - Material Type: Liquid - Behavior Trickiness: Mixed<br />water spills horizontally filling tiny crevices. it can get absorbed by certain materials like sand. fluid flow may influence the movement of individual pixels within the liquid, while gravity causes water to equalize differences in surface height.</p>
+					<p><strong>Motor Oil</strong> - Material Type: Liquid - Behavior Trickiness: Mixed<br />motor oil is less dense than water, thus it stays on top of it. </p>
+					<p><strong>Honey</strong> - Material Type: Gel - Behavior Trickiness: Difficult<br />honey is a very thick and viscous gel-like fluid. it disperses very slowly and forms gel-like formations. most powdery materials can stick, or get stuck inside this liquid.</p>
+					<p><strong>Stone</strong> - Material Type: Unstable Solid - Behavior Trickiness: Mixed<br />Stone is a semi-solid material. it behaves like an extremely stackable powder unless it has connection with one of the map border, in which case, it turns completely solid.</p>
+					<p> </p>
+					<p><strong>DIFFICULTY LIST:</strong></p>
+					<p><span class="dif-tag">DIF1</span> <strong>- Relax:</strong> this gamemode is meant for a more relaxed and less demanding gameplay.</p>
+					<p><strong>KEY CHANGES</strong></p>
+					<ul>
+					<li>only a few materials are included: smooth sand, water, sand and stone</li>
+					<li>significantly slowed game speed - tiles fall much slower, and dont speed up</li>
+					<li>additional delay before spawning new tiles</li>
+					<li>liquid density is ignored. materials that would normally sink, stay afloat</li>
+					<li>liquid absorption is enabled, and wet materials can still form clears with their dry counterparts</li>
+					<li>4 classic sand colors</li>
+					<li>7 classic tile shapes</li>
+					<li>unfiltered random tile selection mode <span class="hint" tabindex="0" data-tip="tiles are picked completely at random, so the same shape can show up several times in a row.">[?]</span></li>
+					<li>unfiltered random color selection mode <span class="hint" tabindex="0" data-tip="colors are picked completely at random, so the same color can show up several times in a row.">[?]</span></li>
+					</ul>
+					<p> </p>
+					<p><span class="dif-tag">DIF2</span> <strong>- Very Easy:</strong> slightly easier than easy :P</p>
+					<p><strong>KEY CHANGES</strong></p>
+					<ul>
+					<li>included materials: smooth sand, water, sand and stone</li>
+					<li>slow game speed, but it speeds up over time. not by much, but it does</li>
+					<li>liquid density is ignored. materials that would normally sink, stay afloat</li>
+					<li>liquid absorption is enabled, and wet materials can still form clears with their dry counterparts</li>
+					<li>4 classic sand colors</li>
+					<li>7 classic tile shapes</li>
+					<li>unfiltered random tile selection mode <span class="hint" tabindex="0" data-tip="tiles are picked completely at random, so the same shape can show up several times in a row.">[?]</span></li>
+					<li>unfiltered random color selection mode <span class="hint" tabindex="0" data-tip="colors are picked completely at random, so the same color can show up several times in a row.">[?]</span></li>
+					</ul>
+					<p> </p>
+					<p><span class="dif-tag">DIF3</span> <strong>- Easy</strong></p>
+					<p><strong>KEY CHANGES</strong></p>
+					<ul>
+					<li>included materials: smooth sand, sand, damp dirt, water and stone</li>
+					<li>slightly faster than DIF2, and it also speeds up faster</li>
+					<li>liquid density is ignored. materials that would normally sink, stay afloat</li>
+					<li>liquid absorption is enabled, and wet materials can still form clears with their dry counterparts</li>
+					<li>4 classic sand colors</li>
+					<li>7 classic tile shapes</li>
+					<li>unfiltered random tile selection mode <span class="hint" tabindex="0" data-tip="tiles are picked completely at random, so the same shape can show up several times in a row.">[?]</span></li>
+					<li>unfiltered random color selection mode <span class="hint" tabindex="0" data-tip="colors are picked completely at random, so the same color can show up several times in a row.">[?]</span></li>
+					</ul>
+					<p> </p>
+					<p><span class="dif-tag">DIF4</span> <strong>- Medium:</strong> the standard experience.</p>
+					<p><strong>KEY CHANGES</strong></p>
+					<ul>
+					<li>included materials: gravel, sand, damp dirt, water, stone, flour, honey and motor oil</li>
+					<li>standard game speed. standard speed up</li>
+					<li>liquid density is ignored. materials that would normally sink, stay afloat</li>
+					<li>liquid absorption is enabled, and wet materials can still form clears with their dry counterparts</li>
+					<li>4 classic sand colors</li>
+					<li>7 classic tile shapes</li>
+					<li>unfiltered random tile selection mode <span class="hint" tabindex="0" data-tip="tiles are picked completely at random, so the same shape can show up several times in a row.">[?]</span></li>
+					<li>unfiltered random color selection mode <span class="hint" tabindex="0" data-tip="colors are picked completely at random, so the same color can show up several times in a row.">[?]</span></li>
+					</ul>
+					<p> </p>
+					<p><span class="dif-tag">DIF5</span> <strong>- Hard:</strong> slightly more difficult.</p>
+					<p><strong>KEY CHANGES</strong></p>
+					<ul>
+					<li>included materials: sand, damp dirt, water, stone, flour, honey and motor oil</li>
+					<li>gamespeed is higher and it speeds up slightly more</li>
+					<li>liquid density is ignored. materials that would normally sink, stay afloat</li>
+					<li>liquid absorption is enabled, and wet materials can still form clears with their dry counterparts</li>
+					<li>4 classic sand colors</li>
+					<li>7 classic tile shapes</li>
+					<li>unfiltered random tile selection mode <span class="hint" tabindex="0" data-tip="tiles are picked completely at random, so the same shape can show up several times in a row.">[?]</span></li>
+					<li class="optional">[OPTIONAL] filtered random color selection - up to 3 same-color tiles in a row</li>
+					</ul>
+					<p> </p>
+					<p><span class="dif-tag">DIF6</span> <strong>- Very Hard:</strong> significantly more difficult. you'd need to lock in for this one.</p>
+					<p><strong>KEY CHANGES</strong></p>
+					<ul>
+					<li>included materials: gravel, damp dirt, coal, water, stone, flour, honey and motor oil</li>
+					<li>gamespeed is higher and it speeds up slightly more</li>
+					<li>random X spawn position for new tiles</li>
+					<li>liquid density is NOT ignored. certain materials may sink</li>
+					<li>liquid absorption is disabled. sand or dirt cant absorb water anymore</li>
+					<li>4 classic sand colors</li>
+					<li>7 classic tile shapes + 4 extra large tile shapes</li>
+					<li>unfiltered random tile selection mode <span class="hint" tabindex="0" data-tip="tiles are picked completely at random, so the same shape can show up several times in a row.">[?]</span></li>
+					<li class="optional">[OPTIONAL] filtered random color selection - up to 3 same-color tiles in a row</li>
+					</ul>
+					<p> </p>
+					<p><span class="dif-tag">DIF7</span> <strong>- Insanely Hard:</strong> this is the point the game becomes close to barely playable</p>
+					<p><strong>KEY CHANGES</strong></p>
+					<ul>
+					<li>all materials are included</li>
+					<li>gamespeed is higher and it speeds up slightly more</li>
+					<li>random X spawn position for new tiles</li>
+					<li>liquid density is NOT ignored. certain materials may sink</li>
+					<li>liquid absorption is disabled. sand or dirt cant absorb water anymore</li>
+					<li>4 classic sand colors</li>
+					<li>7 classic tile shapes + 4 extra large tile shapes</li>
+					<li>unfiltered random tile selection mode <span class="hint" tabindex="0" data-tip="tiles are picked completely at random, so the same shape can show up several times in a row.">[?]</span></li>
+					<li class="optional">[OPTIONAL] filtered random color selection - up to 3 same-color tiles in a row</li>
+					</ul>
+					</div>
+				</section>
+				<section class="all-entry" data-name="classicBricks" data-color="#d98c6a">
+					<div class="mode-body">
+					<p>description coming soon :P</p>
+					</div>
+				</section>
+				<section class="all-entry" data-name="dodgeSand" data-color="#7fe0c8">
+					<div class="mode-body">
+					<p>description coming soon :P</p>
+					</div>
+				</section>
+				<section class="all-entry" data-name="sanDementia" data-color="#c9a0ff">
+					<div class="mode-body">
+					<p>description coming soon :P</p>
+					</div>
+				</section>
+				<section class="all-entry" data-name="deadPixels" data-color="#bdbdbd">
+					<div class="mode-body">
+					<p>description coming soon :P</p>
+					</div>
+				</section>
+				<section class="all-entry" data-name="midnightMode" data-color="#7b8cff">
+					<div class="mode-body">
+					<p>description coming soon :P</p>
+					</div>
+				</section>
+			</div>
 		</div>
 	  </li>
 	</ul>
