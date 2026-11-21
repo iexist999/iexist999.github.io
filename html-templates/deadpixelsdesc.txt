@@ -1,0 +1,66 @@
+<p>tiles fall one at a time and crumble into sand the moment they land. This game plays very much just like the classic mode.. except, every time you clear a line, all of the cells occupied by the removed pixels get <span style="text-decoration: underline;">disabled</span>. Every disabled cell doesnt render at all and just stays black, but doesnt prevent elements from entering that cell - its is still part of the simulation, and can form new line clears. you need to keep track of what enters and leaves the blacked out cells though.</p>
+<p>depending on the selected difficulty settings, the disabled pixels may be limited to a certain number of cells, or certain number of recent clears.</p>
+<p>at lower difficulties, the sand spreads uniformly, forming symmetric pyramid-like structures. at higher ones, sand is replaced by other, less granular materials such as damp dirt or clay.</p>
+<p>your goal, is to make a connection between both of the horiztonal map borders using same-color sand. if you successfully do so, every sand pixel, that made the connection will be removed. you need to prevent sand from reaching the top of the map, in which case, if there is no more space for new tiles to spawn, the game is over.</p>
+<p><strong>DIFFICULTY LIST:</strong></p>
+<p><strong>DIF1 - Relax:</strong> this gamemode is meant for a more relaxed and less demanding gameplay.</p>
+<p><strong>KEY CHANGES</strong></p>
+<ul>
+<li>granularity set to 100% - sand forms perfectly symmetric piles</li>
+<li>significantly slowed game speed - tiles fall much slower, and dont speed up</li>
+<li>additional delay before spawning new tiles</li>
+<li>cells get disabled only up to 1 recent line clear</li>
+<li>4 classic sand colors</li>
+<li>7 classic tile shapes</li>
+<li>unfiltered random tile selection mode [?]</li>
+<li>unfiltered random color selection mode [?]</li>
+</ul>
+<p> </p>
+<p><strong>DIF2 - Easy:</strong> a more forgiving difficulty</p>
+<p><strong>KEY CHANGES</strong></p>
+<ul>
+<li>granularity locked to 70% - we're not using pure sand no more</li>
+<li>slow game speed, but it speeds up over time</li>
+<li>cells get disabled only up to 2 recent line clears</li>
+<li>4 classic sand colors</li>
+<li>7 classic tile shapes</li>
+<li>unfiltered random tile selection mode [?]</li>
+<li>unfiltered random color selection mode [?]</li>
+</ul>
+<p> </p>
+<p><strong>DIF3 - Medium</strong></p>
+<p><strong>KEY CHANGES</strong></p>
+<ul>
+<li>granularity locked to 50%</li>
+<li>slightly faster game speed</li>
+<li>cells get disabled only up to 2 recent line clears</li>
+<li>4 classic sand colors</li>
+<li>7 classic tile shapes</li>
+<li>unfiltered random tile selection mode [?]</li>
+<li>unfiltered random color selection mode [?]</li>
+</ul>
+<p> </p>
+<p><strong>DIF4 - Hard:</strong> </p>
+<p><strong>KEY CHANGES</strong></p>
+<ul>
+<li>granularity locked to 30%</li>
+<li>standard game speed. standard speed up</li>
+<li>cells get disabled only up to 3 recent line clears</li>
+<li>4 classic sand colors</li>
+<li>7 classic tile shapes</li>
+<li>unfiltered random tile selection mode [?]</li>
+<li>unfiltered random color selection mode [?]</li>
+</ul>
+<p> </p>
+<p><strong>DIF5 - Very Hard:</strong> </p>
+<p><strong>KEY CHANGES</strong></p>
+<ul>
+<li>granularity locked to 30%</li>
+<li>faster game speed</li>
+<li>up to 500 cells disabled at a time</li>
+<li>4 classic sand colors</li>
+<li>7 classic tile shapes</li>
+<li>unfiltered random tile selection mode [?]</li>
+<li>unfiltered random color selection mode [?]</li>
+</ul>
+<p> </p>

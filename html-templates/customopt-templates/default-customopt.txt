@@ -1,0 +1,20 @@
+<h3>EXTRA GAME CUSTOMIZATION SETTINGS</h3>
+<p>If none of the above difficulty modes suits your needs, or you just want to tweak one thing that you dont like in one of the gamemodes - just create your own!<br />This gamemode allows you to create customized game experiences.<br />Below is a list of customizable settings avaiable specifically for this gamemode.</p>
+<ul>
+<li>BASIC SETTINGS<br />(note: these are the same for every gamemode, and this list doesnt include ALL of the avaiable settings. only the ones i considered were worth mentioninig. there are a lot of settings you can customize!)</li>
+</ul>
+<ol>
+<li>Gamespeed - the initial speed of the game</li>
+<li>Gamepace - the initial speedup factor of the game</li>
+<li>Game speedup factor - how much/fast the game speeds up</li>
+<li>Strictly Downward Check - tiles are checked for landing only in the downwards motion. it changed whether you can trigger a landing by slamming a tile into a side of a pixel</li>
+<li>Allow Diagonal Checks - makes diagonal connections between pixels register in the line checking algorithm</li>
+<li>Pause On Clear - pauses the simulation when line is being cleared</li>
+<li>Clear All Types - allows line clearing to clear multiple different materials of the same material type. for example, sand and dirt can now form a line clear since they are both a powdery material</li>
+<li>Block Rotation Mode - how should the tiles rotate (0, 4, 8 rotations?)</li>
+<li>Night Mode - this makes the materials emit light, while the game area becomes either darker or pitch black</li>
+<li>Night Mode Ambient Light Amount - dictates how bright the map is</li>
+<li>Light Emission Settings - a set of options regarding the material light emission (intensity, light range, lifetime etc.)</li>
+<li>Used Elements - what elements should be used (sand, water?)</li>
+<li>Used Modificators - what modificators should be included in this gamemode?</li>
+</ol>
