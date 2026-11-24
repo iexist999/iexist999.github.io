@@ -1,0 +1,53 @@
+<p>tiles fall one at a time and crumble into sand the moment they land. </p>
+<p>unlike all the classic modes, the map is covered in darkness. only falling tiles do emit light, and once they're placed, the pixels slowly lose their illuminating effects. how quickly they lose the effects is directly affected by the selected difficulty level.</p>
+<p>your goal, is to make a connection between both of the horiztonal map borders using same-color sand. if you successfully do so, every sand pixel, that made the connection will be removed. you need to prevent sand from reaching the top of the map, in which case, if there is no more space for new tiles to spawn, the game is over.</p>
+<p><strong>DIFFICULTY LIST:</strong></p>
+<p><strong>DIF1 - Relax:</strong> this gamemode is meant for a more relaxed and less demanding gameplay.</p>
+<p><strong>KEY CHANGES</strong></p>
+<ul>
+<li>2 minute grace period - the map is not completely pitch black for the first few minutes of the game</li>
+<li>significantly slowed game speed - tiles fall much slower, and dont speed up</li>
+<li>additional delay before spawning new tiles</li>
+<li>standard light range and intensity - just a few lit pixels is enough to lit up most of the map</li>
+<li>4 classic sand (and lighting!) colors</li>
+<li>7 classic tile shapes</li>
+<li>unfiltered random tile selection mode [?]</li>
+<li>unfiltered random color selection mode [?]</li>
+</ul>
+<p> </p>
+<p><strong>DIF2 - Easy:</strong> a more forgiving difficulty</p>
+<p><strong>KEY CHANGES</strong></p>
+<ul>
+<li>60 second grace period</li>
+<li>slow game speed, but it speeds up over time.</li>
+<li>standard light range and intensity</li>
+<li>4 classic sand (and lighting!) colors</li>
+<li>7 classic tile shapes</li>
+<li>unfiltered random tile selection mode [?]</li>
+<li>unfiltered random color selection mode [?]</li>
+</ul>
+<p> </p>
+<p><strong>DIF3 - Medium</strong></p>
+<p><strong>KEY CHANGES</strong></p>
+<ul>
+<li>15 second grace period</li>
+<li>standard game speed</li>
+<li>lower light range and intensity</li>
+<li>4 classic sand (and lighting!) colors</li>
+<li>7 classic tile shapes</li>
+<li>unfiltered random tile selection mode [?]</li>
+<li>unfiltered random color selection mode [?]</li>
+</ul>
+<p> </p>
+<p><strong>DIF4 - Hard:</strong> </p>
+<p><strong>KEY CHANGES</strong></p>
+<ul>
+<li>no grace period. better buckle up</li>
+<li>standard game speed. faster speed up</li>
+<li>harsher lighting conditions</li>
+<li>4 classic sand (and lighting!) colors</li>
+<li>7 classic tile shapes</li>
+<li>unfiltered random tile selection mode [?]</li>
+<li>unfiltered random color selection mode [?]</li>
+</ul>
+<p> </p>
